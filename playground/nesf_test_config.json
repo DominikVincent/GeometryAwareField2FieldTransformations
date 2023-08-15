@@ -1,0 +1,20 @@
+{
+    "config": [
+        {
+            "model_config": {},
+            "data_parser_config": {
+                "data": "/data/vision/polina/scratch/clintonw/datasets/kubric/klevr/0"
+            },
+            "load_step": 29999,
+            "load_dir": "/data/vision/polina/scratch/clintonw/datasets/nerfacto/0/nerfacto/2023-01-13_145424/nerfstudio_models"
+        },
+        {
+            "model_config": {},
+            "data_parser_config": {
+                "data": "/data/vision/polina/scratch/clintonw/datasets/kubric/klevr/1"
+            },
+            "load_step": 29999,
+            "load_dir": "/data/vision/polina/scratch/clintonw/datasets/nerfacto/1/nerfacto/2023-01-13_145546/nerfstudio_models"
+        }
+    ]
+}

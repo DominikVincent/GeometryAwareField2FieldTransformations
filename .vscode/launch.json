@@ -1,0 +1,323 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Launch Chrome against localhost",
+      "request": "launch",
+      "type": "chrome",
+      "url": "http://localhost:4000",
+      "webRoot": "${workspaceFolder}/nerfstudio/viewer/app"
+    },
+    {
+      "name": "Python: Attach using Process ID",
+      "type": "python",
+      "request": "attach",
+      "processId": "${command:pickProcess}",
+      "justMyCode": true
+    },
+    {
+      "name": "Python: Current File",
+      "type": "python",
+      "request": "launch",
+      "program": "${file}",
+      "console": "integratedTerminal",
+      "justMyCode": true
+    },
+    {
+      "name": "Python: train",
+      "type": "python",
+      "request": "launch",
+      "program": "scripts/train.py",
+      "console": "integratedTerminal",
+      "args": [
+        "instant_ngp",
+        "--viewer.no-enable",
+        "--logging.event-writer=wandb"
+      ]
+    },
+    {
+      "name": "Python: train ngp",
+      "type": "python",
+      "request": "launch",
+      "program": "scripts/train.py",
+      "console": "integratedTerminal",
+      "args": ["instant_ngp"]
+    },
+    {
+      "name": "Python: train ngp nerfstudio",
+      "type": "python",
+      "request": "launch",
+      "program": "scripts/train.py",
+      "console": "integratedTerminal",
+      "args": [
+        "instant_ngp",
+        // "--experiment_name=nerfstudio_experiment",
+        "--logging.local-writer.max-log-size=0",
+        "--viewer.no-enable"
+        // viewer
+        // "--viewer.enable",
+        // "--viewer.zmq-url=tcp://127.0.0.1:6001",
+        // "--viewer.websocket-port=8014",
+        // "--pipeline.model.randomize-background",
+        // "--pipeline.model.cone-angle=0.00390625",
+        // "nerfstudio-data"
+      ]
+    },
+    {
+      "name": "Python: train ngp-friends",
+      "type": "python",
+      "request": "launch",
+      "program": "scripts/train.py",
+      "console": "integratedTerminal",
+      "args": [
+        "instant_ngp",
+        "--viewer.enable",
+        "--viewer.zmq-url=tcp://127.0.0.1:6001",
+        "--viewer.websocket-port=8014",
+        "--steps_per_save=1000000",
+        "--steps_per_test=1000000",
+        "--pipeline.model.density-field-params.base-scale=4",
+        "--pipeline.model.density-field-params.num-cascades=1",
+        "pipeline.datamanager.train-dataparser:friends-data-parser-config",
+        "--pipeline.datamanager.train-dataparser.scene-scale=4"
+      ]
+    },
+    {
+      "name": "Python: train semantic_nerfw",
+      "type": "python",
+      "request": "launch",
+      "program": "scripts/train.py",
+      "console": "integratedTerminal",
+      "args": ["semantic_nerf"]
+    },
+    {
+      "name": "Python: Current File",
+      "type": "python",
+      "request": "launch",
+      "program": "${file}",
+      "console": "integratedTerminal",
+      "justMyCode": false
+  },
+  {
+      "name": "Try NeSF",
+      "type": "python",
+      "request": "launch",
+      "program": "/data/vision/polina/projects/wmh/dhollidt/documents/nerf/nerfstudio_fork/tests/try_nesf.py",
+      // "args": "viewer",
+      // "args": "wandb",
+      "args": "tensorboard",
+      "console": "integratedTerminal",
+      "env": {
+        "CUDA_LAUNCH_BLOCKING": "0",
+        "CUDA_VISIBLE_DEVICES": "0",
+        // "PYTORCH_CUDA_ALLOC_CONF": "max_split_size_mb=1024"
+      },
+      "justMyCode": false
+  },
+  {
+    "name": "sweep NeSF",
+    "type": "python",
+    "request": "launch",
+    "program": "/data/vision/polina/projects/wmh/dhollidt/documents/nerf/nerfstudio_fork/scripts/sweep_nesf.py",
+    "console": "integratedTerminal",
+    "args": "dhollidt/mae-models-project/kfsdevg7",
+    "env": {
+      // "CUDA_LAUNCH_BLOCKING": "1"
+    },
+    "justMyCode": false
+  },
+  {
+      "name": "nerfacto",
+      "type": "python",
+      "request": "launch",
+      "program": "/data/vision/polina/projects/wmh/dhollidt/documents/nerf/nerfstudio_fork/scripts/train.py",
+      "args": ["nerfacto", "--data", "/data/vision/polina/projects/wmh/dhollidt/datasets/toybox-5/0/", "--vis", "tensorboard"],
+      "console": "integratedTerminal",
+      "justMyCode": false
+  },
+  {
+      "name": "ns-eval",
+      "type": "python",
+      "request": "launch",
+      "program": "/data/vision/polina/projects/wmh/dhollidt/documents/nerf/nerfstudio_fork/scripts/eval.py",
+      "args": [
+        "--load-config",
+        "/data/vision/polina/projects/wmh/dhollidt/documents/nerf/nesf_models/tmp/nesf/2023-08-03_230622_457035/auto_eval_config.yml",
+        "--output-path",
+        "/data/vision/polina/projects/wmh/dhollidt/documents/nerf/nesf_models/tmp/nesf/2023-06-29_150157/auto_eval.json",
+        "--use-wandb",
+        "--name",
+        "test_3dmiou",
+      ],
+      "console": "integratedTerminal",
+      "justMyCode": false,
+      "env": {
+         // "CUDA_VISIBLE_DEVICES": "1"
+     }
+  },
+  {
+    "name": "ns-train from config",
+    "type": "python",
+    "request": "launch",
+    "program": "/data/vision/polina/projects/wmh/dhollidt/documents/nerf/nerfstudio_fork/scripts/train.py",
+    "args": ["nesf",
+    "--load_config",
+    "/data/vision/polina/projects/wmh/dhollidt/documents/nerf/nesf_models/tmp/nesf/2023-07-19_170023_940539/auto_eval_config.yml"
+    // "/data/vision/polina/projects/wmh/dhollidt/documents/nerf/toybox-5-depth-normal-models/98/depth-nerfacto/07_04_23/auto_semantic_config.yml"
+    ],
+    "console": "integratedTerminal",
+    "justMyCode": false
+  }
+  {
+    "name": "eval runs",
+    "type": "python",
+    "request": "launch",
+    "program": "/data/vision/polina/projects/wmh/dhollidt/documents/nerf/nerfstudio_fork/train_scripts/eval_sweep.py",
+    "args": ["run","surface-multi-cam-eval"],
+    "console": "integratedTerminal",
+    "justMyCode": false,
+    "env": {
+       // "CUDA_VISIBLE_DEVICES": "1"
+      },
+  },
+  {
+    "name": "ns-train nesf",
+    "type": "python",
+    "request": "launch",
+    "program": "/data/vision/polina/projects/wmh/dhollidt/documents/nerf/nerfstudio_fork/scripts/train.py",
+    "args": [
+      "nesf",
+"--data",
+"/data/vision/polina/projects/wmh/dhollidt/datasets/klevr_nesf/0",
+"--output-dir",
+"/data/vision/polina/projects/wmh/dhollidt/documents/nerf/nesf_models/",
+"--vis",
+"wandb",
+"--steps-per-eval-batch",
+"100",
+"--steps-per-eval-image",
+"500",
+"--steps-per-save",
+"5000",
+"--max-num-iterations",
+"5000000",
+"--pipeline.datamanager.steps-per-model",
+"1",
+"--pipeline.datamanager.train-num-images-to-sample-from",
+"6",
+"--pipeline.datamanager.train-num-times-to-repeat-images",
+"4",
+"--pipeline.datamanager.eval-num-images-to-sample-from",
+"6",
+"--pipeline.datamanager.eval-num-times-to-repeat-images",
+"4",
+"--pipeline.datamanager.train-num-rays-per-batch",
+"65536",
+"--pipeline.datamanager.eval-num-rays-per-batch",
+"65536",
+"--pipeline.model.eval-num-rays-per-chunk",
+"65536",
+"--pipeline.model.sampler.surface-sampling",
+"True",
+"--pipeline.model.sampler.samples-per-ray",
+"5",
+"--pipeline.model.sampler.get-normals",
+"True",
+"--pipeline.model.batching-mode",
+"off",
+"--pipeline.model.batch_size",
+"6144",
+"--pipeline.model.mode",
+"semantics",
+"--pipeline.model.pretrain",
+"False",
+"--pipeline.model.feature-generator-config.use-rgb",
+"True",
+"--pipeline.model.feature-generator-config.use-dir-encoding",
+"True",
+"--pipeline.model.feature-generator-config.use-pos-encoding",
+"True",
+"--pipeline.model.feature-generator-config.pos-encoder",
+"sin",
+"--pipeline.model.feature-generator-config.use-normal-encoding",
+"True",
+"--pipeline.model.feature-generator-config.use-density",
+"True",
+"--pipeline.model.feature-generator-config.out-rgb-dim",
+"16",
+"--pipeline.model.feature-generator-config.out-density-dim",
+"1",
+"--pipeline.model.feature-generator-config.rot-augmentation",
+"True",
+"--pipeline.model.space-partitioning",
+"evenly",
+"--pipeline.model.feature-transformer-model",
+"stratified",
+"--pipeline.model.feature-transformer-stratified-config.grid_size",
+"0.008",
+"--pipeline.model.feature-transformer-stratified-config.quant_size",
+"0.001",
+"nesf-data",
+"--data-config",
+"/data/vision/polina/projects/wmh/dhollidt/documents/nerf/data/klever_depth_nesf_train_10.json"
+  ],
+    "console": "integratedTerminal",
+    "justMyCode": false,
+    "env": {
+       "CUDA_VISIBLE_DEVICES": "1"
+    }
+  },
+  {
+    "name": "ns-train nerfacto depth",
+    "type": "python",
+    "request": "launch",
+    "program": "/data/vision/polina/projects/wmh/dhollidt/documents/nerf/nerfstudio_fork/scripts/train.py",
+    "args": [
+      "depth-nerfacto",
+      "--vis", "wandb",
+      "--pipeline.datamanager.camera-optimizer.mode", "off",
+      "--save-only-latest-checkpoint", "True",
+      "--pipeline.model.predict-normals", "True",
+      "--max-num-iterations", "16000",
+      "--data", "/data/vision/polina/projects/wmh/dhollidt/kubric_datasets/klevr/0",
+      "--experiment-name", "0",
+      "--output-dir", "/data/vision/polina/projects/wmh/dhollidt/documents/nerf/nesf_models/",
+      "--pipeline.model.pred-normal-loss-mult", "0.1",
+      "--pipeline.model.is-euclidean-depth", "True",
+      "--pipeline.model.max-res", "1536",
+      "--viewer.skip-openrelay", "True",
+      "--pipeline.model.depth-sigma", "0.00001",
+      "--pipeline.model.depth-loss-mult", "1",
+      // "--steps-per-eval-batch", "250",
+      "--steps-per-eval-image", "100",
+      // "--steps-per-log", "50"
+      "--viewer.websocket-port", "7022",
+      "--viewer.skip-openrelay", "False",
+      "--wandb-project-name", "nesf-models-project"
+  ],
+    "console": "integratedTerminal",
+    "justMyCode": false,
+    "env": {
+       "CUDA_VISIBLE_DEVICES": "0"
+    }
+  },
+  {
+    "name": "ns-train from config",
+    "type": "python",
+    "request": "launch",
+    "program": "/data/vision/polina/projects/wmh/dhollidt/documents/nerf/nerfstudio_fork/scripts/train.py",
+    "args": [
+      "nesf",
+       "--load_config", "/data/vision/polina/projects/wmh/dhollidt/documents/nerf/nesf_models/tmp/nesf/2023-04-29_175231/auto_semantic_config_small_3_no_pretrain.yml",
+  ],
+    "console": "integratedTerminal",
+    "justMyCode": false,
+    "env": {
+       "CUDA_VISIBLE_DEVICES": "1"
+    }
+  }
+  ]
+}

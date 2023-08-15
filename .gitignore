@@ -1,0 +1,622 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+!scripts/downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# Scrapy stuff:
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+.pybuilder/
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+#   For a library or package, you might want to ignore these files since the code is
+#   intended to run in multiple environments; otherwise, check them in:
+# .python-version
+
+# pipenv
+#   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
+#   However, in case of collaboration, if having platform-specific dependencies or dependencies
+#   having no cross-platform support, pipenv may install dependencies that don't work, or not
+#   install all needed dependencies.
+#Pipfile.lock
+
+# poetry
+#   Similar to Pipfile.lock, it is generally recommended to include poetry.lock in version control.
+#   This is especially recommended for binary packages to ensure reproducibility, and is more
+#   commonly ignored for libraries.
+#   https://python-poetry.org/docs/basic-usage/#commit-your-poetrylock-file-to-version-control
+#poetry.lock
+
+# pdm
+#   Similar to Pipfile.lock, it is generally recommended to include pdm.lock in version control.
+#pdm.lock
+#   pdm stores project-wide configurations in .pdm.toml, but it is recommended to not include it
+#   in version control.
+#   https://pdm.fming.dev/#use-with-ide
+.pdm.toml
+
+# PEP 582; used by e.g. github.com/David-OConnor/pyflow and github.com/pdm-project/pdm
+__pypackages__/
+
+# Celery stuff
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+.env
+.envrc
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# pytype static type analyzer
+.pytype/
+
+# Cython debug symbols
+cython_debug/
+
+# PyCharm
+#  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
+#  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
+#  and can be added to the global gitignore or merged into this file.  For a more nuclear
+#  option (not recommended) you can uncomment the following to ignore the entire idea folder.
+#.idea/
+
+# Experiments and outputs
+outputs/
+exports/
+renders/
+# tensorboard log files
+events.out.*
+
+# Data
+data
+!*/data
+
+# Misc
+old/
+temp*
+!temporal*
+.nfs*
+external/
+__MACOSX/
+node_modules/
+bash/
+cache/
+package-lock.json
+camera_paths/
+playground/own_loading/nerfacto/2023-01-17_155714/config.yml
+playground/own_loading/nerfacto/2023-01-17_155714/viewer_log_filename.txt
+playground/own_loading/nerfacto/2023-01-17_161249/config.yml
+playground/own_loading/nerfacto/2023-01-17_161249/viewer_log_filename.txt
+playground/own_loading/nerfacto/2023-01-17_161415/config.yml
+playground/own_loading/nerfacto/2023-01-17_161415/viewer_log_filename.txt
+playground/own_loading/nerfacto/2023-01-17_161636/config.yml
+playground/own_loading/nerfacto/2023-01-17_162745/config.yml
+playground/own_loading/nerfacto/2023-01-18_032822/config.yml
+playground/own_loading/nerfacto/2023-01-18_040138/config.yml
+playground/own_loading/nerfacto/2023-01-18_055729/config.yml
+playground/own_loading/nerfacto/2023-01-18_061157/config.yml
+playground/own_loading/nerfacto/2023-01-18_061429/config.yml
+playground/own_loading/nerfacto/2023-01-18_084501/config.yml
+playground/own_loading/nerfacto/2023-01-18_084741/config.yml
+playground/own_loading/nerfacto/2023-01-18_084836/config.yml
+playground/own_loading/nerfacto/2023-01-20_105254/config.yml
+playground/own_loading/nerfacto/2023-01-21_050925/config.yml
+playground/own_loading/nerfacto/2023-01-21_051847/config.yml
+playground/own_loading/nerfacto/2023-01-21_072331/config.yml
+playground/own_loading/nerfacto/2023-01-21_072452/config.yml
+playground/own_loading/nerfacto/2023-01-21_072537/config.yml
+playground/own_loading/nerfacto/2023-01-21_073647/config.yml
+playground/own_loading/nerfacto/2023-01-21_073823/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-05_122405/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-05_123219/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-05_125732/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-05_125819/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-05_125857/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-05_130727/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-05_130851/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-05_131043/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-05_131626/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-05_132535/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-05_132630/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-05_133113/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-05_133556/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-05_134029/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-05_134437/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-05_134456/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-05_134830/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-05_135058/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-07_041842/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-07_042259/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-07_042549/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-07_042624/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-07_042833/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-07_043230/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-07_043314/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-07_043351/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-07_043541/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-07_043825/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-07_043907/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-07_044248/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-07_044435/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-07_050004/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-07_050027/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-07_050813/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-07_050813/dataparser_transforms.json
+playground/own_loading/tmp/nerfacto/2023-02-07_051810/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-07_051810/dataparser_transforms.json
+playground/own_loading/tmp/nerfacto/2023-02-07_054051/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-07_054051/dataparser_transforms.json
+playground/own_loading/tmp/nerfacto/2023-02-07_054125/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-07_054125/dataparser_transforms.json
+playground/own_loading/tmp/nerfacto/2023-02-07_054205/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-07_054205/dataparser_transforms.json
+playground/own_loading/tmp/nerfacto/2023-02-07_054350/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-07_054350/dataparser_transforms.json
+playground/own_loading/tmp/nerfacto/2023-02-07_054904/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-07_054904/dataparser_transforms.json
+playground/own_loading/tmp/nerfacto/2023-02-07_055357/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-07_055357/dataparser_transforms.json
+playground/own_loading/tmp/nerfacto/2023-02-07_061849/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-07_062217/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-07_062245/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-07_062428/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-07_062522/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-07_062522/dataparser_transforms.json
+playground/own_loading/tmp/nerfacto/2023-02-07_062716/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-07_062716/dataparser_transforms.json
+playground/own_loading/tmp/nerfacto/2023-02-07_062858/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-07_062858/dataparser_transforms.json
+playground/own_loading/tmp/nerfacto/2023-02-07_064050/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-07_064050/dataparser_transforms.json
+playground/own_loading/tmp/nerfacto/2023-02-07_082639/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-07_082639/dataparser_transforms.json
+playground/own_loading/tmp/nerfacto/2023-02-07_082818/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-07_082818/dataparser_transforms.json
+playground/own_loading/tmp/nerfacto/2023-02-07_083148/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-07_084212/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-07_084212/dataparser_transforms.json
+playground/own_loading/tmp/nerfacto/2023-02-07_084212/nerfstudio_models/step-000002000.ckpt
+playground/own_loading/tmp/nerfacto/2023-02-07_085007/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-07_085007/dataparser_transforms.json
+playground/own_loading/tmp/nerfacto/2023-02-07_085007/wandb/latest-run
+playground/own_loading/tmp/nerfacto/2023-02-07_085007/wandb/run-20230207_085009-16yxwl07/run-16yxwl07.wandb
+playground/own_loading/tmp/nerfacto/2023-02-07_085007/wandb/run-20230207_085009-16yxwl07/files/conda-environment.yaml
+playground/own_loading/tmp/nerfacto/2023-02-07_085007/wandb/run-20230207_085009-16yxwl07/files/config.yaml
+playground/own_loading/tmp/nerfacto/2023-02-07_085007/wandb/run-20230207_085009-16yxwl07/files/requirements.txt
+playground/own_loading/tmp/nerfacto/2023-02-07_085007/wandb/run-20230207_085009-16yxwl07/files/wandb-metadata.json
+playground/own_loading/tmp/nerfacto/2023-02-07_085007/wandb/run-20230207_085009-16yxwl07/files/wandb-summary.json
+playground/own_loading/tmp/nerfacto/2023-02-08_063237/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-08_063237/dataparser_transforms.json
+playground/own_loading/tmp/nerfacto/2023-02-08_063237/wandb/latest-run
+playground/own_loading/tmp/nerfacto/2023-02-08_063237/wandb/run-20230208_063240-3t53lwxw/run-3t53lwxw.wandb
+playground/own_loading/tmp/nerfacto/2023-02-08_063237/wandb/run-20230208_063240-3t53lwxw/files/conda-environment.yaml
+playground/own_loading/tmp/nerfacto/2023-02-08_063237/wandb/run-20230208_063240-3t53lwxw/files/config.yaml
+playground/own_loading/tmp/nerfacto/2023-02-08_063237/wandb/run-20230208_063240-3t53lwxw/files/requirements.txt
+playground/own_loading/tmp/nerfacto/2023-02-08_063237/wandb/run-20230208_063240-3t53lwxw/files/wandb-metadata.json
+playground/own_loading/tmp/nerfacto/2023-02-08_063237/wandb/run-20230208_063240-3t53lwxw/files/wandb-summary.json
+playground/own_loading/tmp/nerfacto/2023-02-08_063503/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-08_063503/dataparser_transforms.json
+playground/own_loading/tmp/nerfacto/2023-02-08_063503/wandb/latest-run
+playground/own_loading/tmp/nerfacto/2023-02-08_063503/wandb/run-20230208_063505-28bpmkf8/run-28bpmkf8.wandb
+playground/own_loading/tmp/nerfacto/2023-02-08_063503/wandb/run-20230208_063505-28bpmkf8/files/conda-environment.yaml
+playground/own_loading/tmp/nerfacto/2023-02-08_063503/wandb/run-20230208_063505-28bpmkf8/files/config.yaml
+playground/own_loading/tmp/nerfacto/2023-02-08_063503/wandb/run-20230208_063505-28bpmkf8/files/requirements.txt
+playground/own_loading/tmp/nerfacto/2023-02-08_063503/wandb/run-20230208_063505-28bpmkf8/files/wandb-metadata.json
+playground/own_loading/tmp/nerfacto/2023-02-08_063503/wandb/run-20230208_063505-28bpmkf8/files/wandb-summary.json
+playground/own_loading/tmp/nerfacto/2023-02-08_064026/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-08_064026/dataparser_transforms.json
+playground/own_loading/tmp/nerfacto/2023-02-08_064026/wandb/latest-run
+playground/own_loading/tmp/nerfacto/2023-02-08_064026/wandb/run-20230208_064028-20ir40wd/run-20ir40wd.wandb
+playground/own_loading/tmp/nerfacto/2023-02-08_064026/wandb/run-20230208_064028-20ir40wd/files/conda-environment.yaml
+playground/own_loading/tmp/nerfacto/2023-02-08_064026/wandb/run-20230208_064028-20ir40wd/files/config.yaml
+playground/own_loading/tmp/nerfacto/2023-02-08_064026/wandb/run-20230208_064028-20ir40wd/files/requirements.txt
+playground/own_loading/tmp/nerfacto/2023-02-08_064026/wandb/run-20230208_064028-20ir40wd/files/wandb-metadata.json
+playground/own_loading/tmp/nerfacto/2023-02-08_064026/wandb/run-20230208_064028-20ir40wd/files/wandb-summary.json
+playground/own_loading/tmp/nerfacto/2023-02-08_064325/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-08_064325/dataparser_transforms.json
+playground/own_loading/tmp/nerfacto/2023-02-08_064325/wandb/latest-run
+playground/own_loading/tmp/nerfacto/2023-02-08_064325/wandb/run-20230208_064328-3ab6eciu/run-3ab6eciu.wandb
+playground/own_loading/tmp/nerfacto/2023-02-08_064325/wandb/run-20230208_064328-3ab6eciu/files/conda-environment.yaml
+playground/own_loading/tmp/nerfacto/2023-02-08_064325/wandb/run-20230208_064328-3ab6eciu/files/config.yaml
+playground/own_loading/tmp/nerfacto/2023-02-08_064325/wandb/run-20230208_064328-3ab6eciu/files/requirements.txt
+playground/own_loading/tmp/nerfacto/2023-02-08_064325/wandb/run-20230208_064328-3ab6eciu/files/wandb-metadata.json
+playground/own_loading/tmp/nerfacto/2023-02-08_064325/wandb/run-20230208_064328-3ab6eciu/files/wandb-summary.json
+playground/own_loading/tmp/nerfacto/2023-02-08_064542/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-08_064542/dataparser_transforms.json
+playground/own_loading/tmp/nerfacto/2023-02-08_064542/viewer_log_filename.txt
+playground/own_loading/tmp/nerfacto/2023-02-08_064702/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-08_064702/dataparser_transforms.json
+playground/own_loading/tmp/nerfacto/2023-02-08_064702/viewer_log_filename.txt
+playground/own_loading/tmp/nerfacto/2023-02-08_064821/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-08_064821/dataparser_transforms.json
+playground/own_loading/tmp/nerfacto/2023-02-08_064821/viewer_log_filename.txt
+playground/own_loading/tmp/nerfacto/2023-02-08_065551/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-08_065551/dataparser_transforms.json
+playground/own_loading/tmp/nerfacto/2023-02-08_065551/wandb/latest-run
+playground/own_loading/tmp/nerfacto/2023-02-08_065551/wandb/run-20230208_065556-23ygc9rm/run-23ygc9rm.wandb
+playground/own_loading/tmp/nerfacto/2023-02-08_065551/wandb/run-20230208_065556-23ygc9rm/files/conda-environment.yaml
+playground/own_loading/tmp/nerfacto/2023-02-08_065551/wandb/run-20230208_065556-23ygc9rm/files/config.yaml
+playground/own_loading/tmp/nerfacto/2023-02-08_065551/wandb/run-20230208_065556-23ygc9rm/files/requirements.txt
+playground/own_loading/tmp/nerfacto/2023-02-08_065551/wandb/run-20230208_065556-23ygc9rm/files/wandb-metadata.json
+playground/own_loading/tmp/nerfacto/2023-02-08_065551/wandb/run-20230208_065556-23ygc9rm/files/wandb-summary.json
+playground/own_loading/tmp/nerfacto/2023-02-08_065712/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-08_065712/dataparser_transforms.json
+playground/own_loading/tmp/nerfacto/2023-02-08_065712/wandb/latest-run
+playground/own_loading/tmp/nerfacto/2023-02-08_065712/wandb/run-20230208_065715-32e5sbs6/run-32e5sbs6.wandb
+playground/own_loading/tmp/nerfacto/2023-02-08_065712/wandb/run-20230208_065715-32e5sbs6/files/conda-environment.yaml
+playground/own_loading/tmp/nerfacto/2023-02-08_065712/wandb/run-20230208_065715-32e5sbs6/files/config.yaml
+playground/own_loading/tmp/nerfacto/2023-02-08_065712/wandb/run-20230208_065715-32e5sbs6/files/requirements.txt
+playground/own_loading/tmp/nerfacto/2023-02-08_065712/wandb/run-20230208_065715-32e5sbs6/files/wandb-metadata.json
+playground/own_loading/tmp/nerfacto/2023-02-08_065712/wandb/run-20230208_065715-32e5sbs6/files/wandb-summary.json
+playground/own_loading/tmp/nerfacto/2023-02-08_073211/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-08_073211/dataparser_transforms.json
+playground/own_loading/tmp/nerfacto/2023-02-08_073211/wandb/latest-run
+playground/own_loading/tmp/nerfacto/2023-02-08_073211/wandb/run-20230208_073214-2gcpizbh/run-2gcpizbh.wandb
+playground/own_loading/tmp/nerfacto/2023-02-08_073211/wandb/run-20230208_073214-2gcpizbh/files/conda-environment.yaml
+playground/own_loading/tmp/nerfacto/2023-02-08_073211/wandb/run-20230208_073214-2gcpizbh/files/config.yaml
+playground/own_loading/tmp/nerfacto/2023-02-08_073211/wandb/run-20230208_073214-2gcpizbh/files/requirements.txt
+playground/own_loading/tmp/nerfacto/2023-02-08_073211/wandb/run-20230208_073214-2gcpizbh/files/wandb-metadata.json
+playground/own_loading/tmp/nerfacto/2023-02-08_073211/wandb/run-20230208_073214-2gcpizbh/files/wandb-summary.json
+playground/own_loading/tmp/nerfacto/2023-02-08_082207/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-08_082207/dataparser_transforms.json
+playground/own_loading/tmp/nerfacto/2023-02-08_082207/wandb/latest-run
+playground/own_loading/tmp/nerfacto/2023-02-08_082207/wandb/run-20230208_082216-19cypdlv/run-19cypdlv.wandb
+playground/own_loading/tmp/nerfacto/2023-02-08_082207/wandb/run-20230208_082216-19cypdlv/files/conda-environment.yaml
+playground/own_loading/tmp/nerfacto/2023-02-08_082207/wandb/run-20230208_082216-19cypdlv/files/config.yaml
+playground/own_loading/tmp/nerfacto/2023-02-08_082207/wandb/run-20230208_082216-19cypdlv/files/requirements.txt
+playground/own_loading/tmp/nerfacto/2023-02-08_082207/wandb/run-20230208_082216-19cypdlv/files/wandb-metadata.json
+playground/own_loading/tmp/nerfacto/2023-02-08_082207/wandb/run-20230208_082216-19cypdlv/files/wandb-summary.json
+playground/own_loading/tmp/nerfacto/2023-02-08_082452/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-08_082452/dataparser_transforms.json
+playground/own_loading/tmp/nerfacto/2023-02-08_082452/wandb/latest-run
+playground/own_loading/tmp/nerfacto/2023-02-08_082452/wandb/run-20230208_082515-2hqpf879/run-2hqpf879.wandb
+playground/own_loading/tmp/nerfacto/2023-02-08_082452/wandb/run-20230208_082515-2hqpf879/files/conda-environment.yaml
+playground/own_loading/tmp/nerfacto/2023-02-08_082452/wandb/run-20230208_082515-2hqpf879/files/config.yaml
+playground/own_loading/tmp/nerfacto/2023-02-08_082452/wandb/run-20230208_082515-2hqpf879/files/requirements.txt
+playground/own_loading/tmp/nerfacto/2023-02-08_082452/wandb/run-20230208_082515-2hqpf879/files/wandb-metadata.json
+playground/own_loading/tmp/nerfacto/2023-02-08_082452/wandb/run-20230208_082515-2hqpf879/files/wandb-summary.json
+playground/own_loading/tmp/nerfacto/2023-02-08_084408/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-08_084408/dataparser_transforms.json
+playground/own_loading/tmp/nerfacto/2023-02-08_084408/wandb/latest-run
+playground/own_loading/tmp/nerfacto/2023-02-08_084408/wandb/run-20230208_084410-23otz18e/run-23otz18e.wandb
+playground/own_loading/tmp/nerfacto/2023-02-08_084408/wandb/run-20230208_084410-23otz18e/files/conda-environment.yaml
+playground/own_loading/tmp/nerfacto/2023-02-08_084408/wandb/run-20230208_084410-23otz18e/files/config.yaml
+playground/own_loading/tmp/nerfacto/2023-02-08_084408/wandb/run-20230208_084410-23otz18e/files/requirements.txt
+playground/own_loading/tmp/nerfacto/2023-02-08_084408/wandb/run-20230208_084410-23otz18e/files/wandb-metadata.json
+playground/own_loading/tmp/nerfacto/2023-02-08_084408/wandb/run-20230208_084410-23otz18e/files/wandb-summary.json
+playground/own_loading/tmp/nerfacto/2023-02-08_084615/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-08_084615/dataparser_transforms.json
+playground/own_loading/tmp/nerfacto/2023-02-08_084615/wandb/latest-run
+playground/own_loading/tmp/nerfacto/2023-02-08_084615/wandb/run-20230208_084626-2gooq7ma/run-2gooq7ma.wandb
+playground/own_loading/tmp/nerfacto/2023-02-08_084615/wandb/run-20230208_084626-2gooq7ma/files/conda-environment.yaml
+playground/own_loading/tmp/nerfacto/2023-02-08_084615/wandb/run-20230208_084626-2gooq7ma/files/config.yaml
+playground/own_loading/tmp/nerfacto/2023-02-08_084615/wandb/run-20230208_084626-2gooq7ma/files/requirements.txt
+playground/own_loading/tmp/nerfacto/2023-02-08_084615/wandb/run-20230208_084626-2gooq7ma/files/wandb-metadata.json
+playground/own_loading/tmp/nerfacto/2023-02-08_084615/wandb/run-20230208_084626-2gooq7ma/files/wandb-summary.json
+playground/own_loading/tmp/nerfacto/2023-02-08_090530/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-08_090602/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-08_092208/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-08_092208/dataparser_transforms.json
+playground/own_loading/tmp/nerfacto/2023-02-08_092208/wandb/latest-run
+playground/own_loading/tmp/nerfacto/2023-02-08_092208/wandb/run-20230208_092214-13zoe6d1/run-13zoe6d1.wandb
+playground/own_loading/tmp/nerfacto/2023-02-08_092208/wandb/run-20230208_092214-13zoe6d1/files/conda-environment.yaml
+playground/own_loading/tmp/nerfacto/2023-02-08_092208/wandb/run-20230208_092214-13zoe6d1/files/config.yaml
+playground/own_loading/tmp/nerfacto/2023-02-08_092208/wandb/run-20230208_092214-13zoe6d1/files/requirements.txt
+playground/own_loading/tmp/nerfacto/2023-02-08_092208/wandb/run-20230208_092214-13zoe6d1/files/wandb-metadata.json
+playground/own_loading/tmp/nerfacto/2023-02-08_092208/wandb/run-20230208_092214-13zoe6d1/files/wandb-summary.json
+playground/own_loading/tmp/nerfacto/2023-02-08_094502/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-08_094502/dataparser_transforms.json
+playground/own_loading/tmp/nerfacto/2023-02-08_094502/wandb/latest-run
+playground/own_loading/tmp/nerfacto/2023-02-08_094502/wandb/run-20230208_094508-29ta7mll/run-29ta7mll.wandb
+playground/own_loading/tmp/nerfacto/2023-02-08_094502/wandb/run-20230208_094508-29ta7mll/files/conda-environment.yaml
+playground/own_loading/tmp/nerfacto/2023-02-08_094502/wandb/run-20230208_094508-29ta7mll/files/config.yaml
+playground/own_loading/tmp/nerfacto/2023-02-08_094502/wandb/run-20230208_094508-29ta7mll/files/requirements.txt
+playground/own_loading/tmp/nerfacto/2023-02-08_094502/wandb/run-20230208_094508-29ta7mll/files/wandb-metadata.json
+playground/own_loading/tmp/nerfacto/2023-02-08_094502/wandb/run-20230208_094508-29ta7mll/files/wandb-summary.json
+playground/own_loading/tmp/nerfacto/2023-02-08_094701/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-08_094701/dataparser_transforms.json
+playground/own_loading/tmp/nerfacto/2023-02-08_094701/wandb/latest-run
+playground/own_loading/tmp/nerfacto/2023-02-08_094701/wandb/run-20230208_094707-1pb7xwiu/run-1pb7xwiu.wandb
+playground/own_loading/tmp/nerfacto/2023-02-08_094701/wandb/run-20230208_094707-1pb7xwiu/files/conda-environment.yaml
+playground/own_loading/tmp/nerfacto/2023-02-08_094701/wandb/run-20230208_094707-1pb7xwiu/files/config.yaml
+playground/own_loading/tmp/nerfacto/2023-02-08_094701/wandb/run-20230208_094707-1pb7xwiu/files/requirements.txt
+playground/own_loading/tmp/nerfacto/2023-02-08_094701/wandb/run-20230208_094707-1pb7xwiu/files/wandb-metadata.json
+playground/own_loading/tmp/nerfacto/2023-02-08_094701/wandb/run-20230208_094707-1pb7xwiu/files/wandb-summary.json
+playground/own_loading/tmp/nerfacto/2023-02-08_114101/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-08_114101/dataparser_transforms.json
+playground/own_loading/tmp/nerfacto/2023-02-08_114101/wandb/latest-run
+playground/own_loading/tmp/nerfacto/2023-02-08_114101/wandb/run-20230208_114107-39lstdmv/run-39lstdmv.wandb
+playground/own_loading/tmp/nerfacto/2023-02-08_114101/wandb/run-20230208_114107-39lstdmv/files/conda-environment.yaml
+playground/own_loading/tmp/nerfacto/2023-02-08_114101/wandb/run-20230208_114107-39lstdmv/files/config.yaml
+playground/own_loading/tmp/nerfacto/2023-02-08_114101/wandb/run-20230208_114107-39lstdmv/files/requirements.txt
+playground/own_loading/tmp/nerfacto/2023-02-08_114101/wandb/run-20230208_114107-39lstdmv/files/wandb-metadata.json
+playground/own_loading/tmp/nerfacto/2023-02-08_114101/wandb/run-20230208_114107-39lstdmv/files/wandb-summary.json
+playground/own_loading/tmp/nerfacto/2023-02-08_114432/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-08_114432/dataparser_transforms.json
+playground/own_loading/tmp/nerfacto/2023-02-08_114432/wandb/latest-run
+playground/own_loading/tmp/nerfacto/2023-02-08_114432/wandb/run-20230208_114438-ypvy8lmy/run-ypvy8lmy.wandb
+playground/own_loading/tmp/nerfacto/2023-02-08_114432/wandb/run-20230208_114438-ypvy8lmy/files/conda-environment.yaml
+playground/own_loading/tmp/nerfacto/2023-02-08_114432/wandb/run-20230208_114438-ypvy8lmy/files/config.yaml
+playground/own_loading/tmp/nerfacto/2023-02-08_114432/wandb/run-20230208_114438-ypvy8lmy/files/requirements.txt
+playground/own_loading/tmp/nerfacto/2023-02-08_114432/wandb/run-20230208_114438-ypvy8lmy/files/wandb-metadata.json
+playground/own_loading/tmp/nerfacto/2023-02-08_114432/wandb/run-20230208_114438-ypvy8lmy/files/wandb-summary.json
+playground/own_loading/tmp/nerfacto/2023-02-08_114957/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-08_114957/dataparser_transforms.json
+playground/own_loading/tmp/nerfacto/2023-02-08_114957/wandb/latest-run
+playground/own_loading/tmp/nerfacto/2023-02-08_114957/wandb/run-20230208_115117-1s5l5m7n/run-1s5l5m7n.wandb
+playground/own_loading/tmp/nerfacto/2023-02-08_114957/wandb/run-20230208_115117-1s5l5m7n/files/conda-environment.yaml
+playground/own_loading/tmp/nerfacto/2023-02-08_114957/wandb/run-20230208_115117-1s5l5m7n/files/config.yaml
+playground/own_loading/tmp/nerfacto/2023-02-08_114957/wandb/run-20230208_115117-1s5l5m7n/files/requirements.txt
+playground/own_loading/tmp/nerfacto/2023-02-08_114957/wandb/run-20230208_115117-1s5l5m7n/files/wandb-metadata.json
+playground/own_loading/tmp/nerfacto/2023-02-08_114957/wandb/run-20230208_115117-1s5l5m7n/files/wandb-summary.json
+playground/own_loading/tmp/nerfacto/2023-02-08_115234/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-08_115234/dataparser_transforms.json
+playground/own_loading/tmp/nerfacto/2023-02-08_115234/wandb/latest-run
+playground/own_loading/tmp/nerfacto/2023-02-08_115234/wandb/run-20230208_115248-1xxtxht0/run-1xxtxht0.wandb
+playground/own_loading/tmp/nerfacto/2023-02-08_115234/wandb/run-20230208_115248-1xxtxht0/files/conda-environment.yaml
+playground/own_loading/tmp/nerfacto/2023-02-08_115234/wandb/run-20230208_115248-1xxtxht0/files/config.yaml
+playground/own_loading/tmp/nerfacto/2023-02-08_115234/wandb/run-20230208_115248-1xxtxht0/files/requirements.txt
+playground/own_loading/tmp/nerfacto/2023-02-08_115234/wandb/run-20230208_115248-1xxtxht0/files/wandb-metadata.json
+playground/own_loading/tmp/nerfacto/2023-02-08_115234/wandb/run-20230208_115248-1xxtxht0/files/wandb-summary.json
+playground/own_loading/tmp/nerfacto/2023-02-08_115456/config.yml
+playground/own_loading/tmp/nerfacto/2023-02-08_115456/dataparser_transforms.json
+playground/own_loading/tmp/nerfacto/2023-02-08_115456/wandb/latest-run
+playground/own_loading/tmp/nerfacto/2023-02-08_115456/wandb/run-20230208_115525-29n25ywz/run-29n25ywz.wandb
+playground/own_loading/tmp/nerfacto/2023-02-08_115456/wandb/run-20230208_115525-29n25ywz/files/conda-environment.yaml
+playground/own_loading/tmp/nerfacto/2023-02-08_115456/wandb/run-20230208_115525-29n25ywz/files/config.yaml
+playground/own_loading/tmp/nerfacto/2023-02-08_115456/wandb/run-20230208_115525-29n25ywz/files/requirements.txt
+playground/own_loading/tmp/nerfacto/2023-02-08_115456/wandb/run-20230208_115525-29n25ywz/files/wandb-metadata.json
+playground/own_loading/tmp/nerfacto/2023-02-08_115456/wandb/run-20230208_115525-29n25ywz/files/wandb-summary.json
+playground/own_loading/tmp/nesf/2023-02-09_063630/config.yml
+playground/own_loading/tmp/nesf/2023-02-09_063630/wandb/latest-run
+playground/own_loading/tmp/nesf/2023-02-09_063630/wandb/run-20230209_063730-u4y4insg/run-u4y4insg.wandb
+playground/own_loading/tmp/nesf/2023-02-09_063630/wandb/run-20230209_063730-u4y4insg/files/conda-environment.yaml
+playground/own_loading/tmp/nesf/2023-02-09_063630/wandb/run-20230209_063730-u4y4insg/files/config.yaml
+playground/own_loading/tmp/nesf/2023-02-09_063630/wandb/run-20230209_063730-u4y4insg/files/requirements.txt
+playground/own_loading/tmp/nesf/2023-02-09_063630/wandb/run-20230209_063730-u4y4insg/files/wandb-metadata.json
+playground/own_loading/tmp/nesf/2023-02-09_063630/wandb/run-20230209_063730-u4y4insg/files/wandb-summary.json
+playground/own_loading/tmp/nesf/2023-02-09_070727/config.yml
+playground/own_loading/tmp/nesf/2023-02-09_070727/wandb/latest-run
+playground/own_loading/tmp/nesf/2023-02-09_070727/wandb/run-20230209_070750-o4pm42jp/run-o4pm42jp.wandb
+playground/own_loading/tmp/nesf/2023-02-09_070727/wandb/run-20230209_070750-o4pm42jp/files/conda-environment.yaml
+playground/own_loading/tmp/nesf/2023-02-09_070727/wandb/run-20230209_070750-o4pm42jp/files/config.yaml
+playground/own_loading/tmp/nesf/2023-02-09_070727/wandb/run-20230209_070750-o4pm42jp/files/requirements.txt
+playground/own_loading/tmp/nesf/2023-02-09_070727/wandb/run-20230209_070750-o4pm42jp/files/wandb-metadata.json
+playground/own_loading/tmp/nesf/2023-02-09_070727/wandb/run-20230209_070750-o4pm42jp/files/wandb-summary.json
+playground/own_loading/tmp/nesf/2023-02-09_070943/config.yml
+playground/own_loading/tmp/nesf/2023-02-09_070943/wandb/latest-run
+playground/own_loading/tmp/nesf/2023-02-09_070943/wandb/run-20230209_070946-ott3gzoh/run-ott3gzoh.wandb
+playground/own_loading/tmp/nesf/2023-02-09_070943/wandb/run-20230209_070946-ott3gzoh/files/conda-environment.yaml
+playground/own_loading/tmp/nesf/2023-02-09_070943/wandb/run-20230209_070946-ott3gzoh/files/config.yaml
+playground/own_loading/tmp/nesf/2023-02-09_070943/wandb/run-20230209_070946-ott3gzoh/files/requirements.txt
+playground/own_loading/tmp/nesf/2023-02-09_070943/wandb/run-20230209_070946-ott3gzoh/files/wandb-metadata.json
+playground/own_loading/tmp/nesf/2023-02-09_070943/wandb/run-20230209_070946-ott3gzoh/files/wandb-summary.json
+playground/own_loading/tmp/nesf/2023-02-09_080000/config.yml
+playground/own_loading/tmp/nesf/2023-02-09_080000/dataparser_transforms.json
+playground/own_loading/tmp/nesf/2023-02-09_080000/nerfstudio_models/step-000002000.ckpt
+playground/own_loading/tmp/nesf/2023-02-09_080000/wandb/latest-run
+playground/own_loading/tmp/nesf/2023-02-09_080000/wandb/run-20230209_080015-qk9wwfn7/run-qk9wwfn7.wandb
+playground/own_loading/tmp/nesf/2023-02-09_080000/wandb/run-20230209_080015-qk9wwfn7/files/conda-environment.yaml
+playground/own_loading/tmp/nesf/2023-02-09_080000/wandb/run-20230209_080015-qk9wwfn7/files/config.yaml
+playground/own_loading/tmp/nesf/2023-02-09_080000/wandb/run-20230209_080015-qk9wwfn7/files/requirements.txt
+playground/own_loading/tmp/nesf/2023-02-09_080000/wandb/run-20230209_080015-qk9wwfn7/files/wandb-metadata.json
+playground/own_loading/tmp/nesf/2023-02-09_080000/wandb/run-20230209_080015-qk9wwfn7/files/wandb-summary.json
+playground/own_loading/tmp/nesf/2023-02-09_080000/wandb/run-20230209_080015-qk9wwfn7/files/media/images/Eval Images/img_500_801f77c7e04632c52009.png
+playground/own_loading/tmp/nesf/2023-02-09_080000/wandb/run-20230209_080015-qk9wwfn7/files/media/images/Eval Images/img_1000_32de66a694458786ddda.png
+playground/own_loading/tmp/nesf/2023-02-09_080000/wandb/run-20230209_080015-qk9wwfn7/files/media/images/Eval Images/img_1500_9950666acfcfab0d5a4f.png
+playground/own_loading/tmp/nesf/2023-02-09_080000/wandb/run-20230209_080015-qk9wwfn7/files/media/images/Eval Images/img_2000_1eb6bacd0efb291b40e5.png
+playground/own_loading/tmp/nesf/2023-02-09_084239/config.yml
+playground/own_loading/tmp/nesf/2023-02-09_084239/dataparser_transforms.json
+playground/own_loading/tmp/nesf/2023-02-09_084239/viewer_log_filename.txt
+playground/own_loading/tmp/nesf/2023-02-09_094241/config.yml
+playground/own_loading/tmp/nesf/2023-02-09_094241/dataparser_transforms.json
+playground/own_loading/tmp/nesf/2023-02-09_094241/viewer_log_filename.txt
+playground/own_loading/tmp/nesf/2023-02-09_095055/config.yml
+playground/own_loading/tmp/nesf/2023-02-09_095055/wandb/latest-run
+playground/own_loading/tmp/nesf/2023-02-09_095055/wandb/run-20230209_095101-gqecgui7/run-gqecgui7.wandb
+playground/own_loading/tmp/nesf/2023-02-09_095055/wandb/run-20230209_095101-gqecgui7/files/conda-environment.yaml
+playground/own_loading/tmp/nesf/2023-02-09_095055/wandb/run-20230209_095101-gqecgui7/files/config.yaml
+playground/own_loading/tmp/nesf/2023-02-09_095055/wandb/run-20230209_095101-gqecgui7/files/requirements.txt
+playground/own_loading/tmp/nesf/2023-02-09_095055/wandb/run-20230209_095101-gqecgui7/files/wandb-metadata.json
+playground/own_loading/tmp/nesf/2023-02-09_095055/wandb/run-20230209_095101-gqecgui7/files/wandb-summary.json
+playground/own_loading/tmp/nesf/2023-02-09_095332/config.yml
+playground/own_loading/tmp/nesf/2023-02-09_095332/dataparser_transforms.json
+playground/own_loading/tmp/nesf/2023-02-09_095332/wandb/latest-run
+playground/own_loading/tmp/nesf/2023-02-09_095332/wandb/run-20230209_095337-l2hlku7a/run-l2hlku7a.wandb
+playground/own_loading/tmp/nesf/2023-02-09_095332/wandb/run-20230209_095337-l2hlku7a/files/conda-environment.yaml
+playground/own_loading/tmp/nesf/2023-02-09_095332/wandb/run-20230209_095337-l2hlku7a/files/config.yaml
+playground/own_loading/tmp/nesf/2023-02-09_095332/wandb/run-20230209_095337-l2hlku7a/files/requirements.txt
+playground/own_loading/tmp/nesf/2023-02-09_095332/wandb/run-20230209_095337-l2hlku7a/files/wandb-metadata.json
+playground/own_loading/tmp/nesf/2023-02-09_095332/wandb/run-20230209_095337-l2hlku7a/files/wandb-summary.json
+playground/own_loading/tmp/nesf/2023-02-09_095713/config.yml
+playground/own_loading/tmp/nesf/2023-02-09_095713/dataparser_transforms.json
+playground/own_loading/tmp/nesf/2023-02-09_095713/wandb/latest-run
+playground/own_loading/tmp/nesf/2023-02-09_095713/wandb/run-20230209_095719-db9qpdmc/run-db9qpdmc.wandb
+playground/own_loading/tmp/nesf/2023-02-09_095713/wandb/run-20230209_095719-db9qpdmc/files/conda-environment.yaml
+playground/own_loading/tmp/nesf/2023-02-09_095713/wandb/run-20230209_095719-db9qpdmc/files/config.yaml
+playground/own_loading/tmp/nesf/2023-02-09_095713/wandb/run-20230209_095719-db9qpdmc/files/requirements.txt
+playground/own_loading/tmp/nesf/2023-02-09_095713/wandb/run-20230209_095719-db9qpdmc/files/wandb-metadata.json
+playground/own_loading/tmp/nesf/2023-02-09_095713/wandb/run-20230209_095719-db9qpdmc/files/wandb-summary.json
+playground/own_loading/tmp/nesf/2023-02-09_100212/config.yml
+playground/own_loading/tmp/nesf/2023-02-09_100212/dataparser_transforms.json
+playground/own_loading/tmp/nesf/2023-02-09_100212/nerfstudio_models/step-000004000.ckpt
+playground/own_loading/tmp/nesf/2023-02-09_100212/wandb/latest-run
+playground/own_loading/tmp/nesf/2023-02-09_100212/wandb/run-20230209_100220-0tlczq7u/run-0tlczq7u.wandb
+playground/own_loading/tmp/nesf/2023-02-09_100212/wandb/run-20230209_100220-0tlczq7u/files/conda-environment.yaml
+playground/own_loading/tmp/nesf/2023-02-09_100212/wandb/run-20230209_100220-0tlczq7u/files/config.yaml
+playground/own_loading/tmp/nesf/2023-02-09_100212/wandb/run-20230209_100220-0tlczq7u/files/requirements.txt
+playground/own_loading/tmp/nesf/2023-02-09_100212/wandb/run-20230209_100220-0tlczq7u/files/wandb-metadata.json
+playground/own_loading/tmp/nesf/2023-02-09_100212/wandb/run-20230209_100220-0tlczq7u/files/wandb-summary.json
+playground/own_loading/tmp/nesf/2023-02-09_100212/wandb/run-20230209_100220-0tlczq7u/files/media/images/Eval Images/img_500_ee69f92270770d6bde60.png
+playground/own_loading/tmp/nesf/2023-02-09_100212/wandb/run-20230209_100220-0tlczq7u/files/media/images/Eval Images/img_1000_a7db3ca80059b3663b6c.png
+playground/own_loading/tmp/nesf/2023-02-09_100212/wandb/run-20230209_100220-0tlczq7u/files/media/images/Eval Images/img_1500_6472aadf587a1c29afa9.png
+playground/own_loading/tmp/nesf/2023-02-09_100212/wandb/run-20230209_100220-0tlczq7u/files/media/images/Eval Images/img_2000_4c1647cf4265421a3aff.png
+playground/own_loading/tmp/nesf/2023-02-09_100212/wandb/run-20230209_100220-0tlczq7u/files/media/images/Eval Images/img_2500_157fd47b6e0f034e21a4.png
+playground/own_loading/tmp/nesf/2023-02-09_100212/wandb/run-20230209_100220-0tlczq7u/files/media/images/Eval Images/img_3000_a7db3ca80059b3663b6c.png
+playground/own_loading/tmp/nesf/2023-02-09_100212/wandb/run-20230209_100220-0tlczq7u/files/media/images/Eval Images/img_3500_f67e263c916ce7cbeb4a.png
+playground/own_loading/tmp/nesf/2023-02-09_100212/wandb/run-20230209_100220-0tlczq7u/files/media/images/Eval Images/img_4000_42dcd0d7f1508cb680cd.png
+playground/own_loading/tmp/nesf/2023-02-09_100212/wandb/run-20230209_100220-0tlczq7u/files/media/images/Eval Images/img_4500_74ba1f06f18a843e7806.png
+playground/own_loading/tmp/nesf/2023-02-09_100212/wandb/run-20230209_100220-0tlczq7u/files/media/images/Eval Images/img_5000_e33ec8eb382f5e1408eb.png
+playground/own_loading/tmp/nesf/2023-02-09_100212/wandb/run-20230209_100220-0tlczq7u/files/media/images/Eval Images/img_5500_f7539134238192b4e4eb.png
+playground/own_loading/tmp/nesf/2023-02-09_100801/config.yml
+playground/own_loading/tmp/nesf/2023-02-09_100801/dataparser_transforms.json
+playground/own_loading/tmp/nesf/2023-02-09_100801/viewer_log_filename.txt
+playground/own_loading/tmp/nesf/2023-02-09_100801/nerfstudio_models/step-000002000.ckpt
+playground/own_loading/tmp/nesf/2023-02-09_100942/config.yml
+playground/own_loading/tmp/nesf/2023-02-09_100942/dataparser_transforms.json
+playground/own_loading/tmp/nesf/2023-02-09_100942/viewer_log_filename.txt
+playground/own_loading/tmp/nesf/2023-02-09_100942/nerfstudio_models/step-000004000.ckpt
+playground/tmp/nerfacto/2023-01-24_053345/config.yml
+playground/tmp/nerfacto/2023-01-24_053939/config.yml
+playground/tmp/nerfacto/2023-01-24_073748/config.yml
+playground/tmp/nerfacto/2023-01-24_095248/config.yml
+playground/tmp/nerfacto/2023-01-25_053010/config.yml
+playground/tmp/nerfacto/2023-01-25_103943/config.yml
+playground/tmp/nerfacto/2023-01-25_104230/config.yml
+playground/tmp/nerfacto/2023-01-25_111658/config.yml
+playground/tmp/nerfacto/2023-01-25_112616/config.yml
+playground/tmp/nerfacto/2023-01-26_034044/config.yml
+playground/tmp/nerfacto/2023-01-26_043219/config.yml
+playground/tmp/nerfacto/2023-01-30_063042/config.yml
+playground/tmp/nerfacto/2023-01-30_094039/config.yml
+playground/tmp/nerfacto/2023-01-31_064816/config.yml
+playground/tmp/nerfacto/2023-01-31_094536/config.yml
+playground/tmp/nerfacto/2023-01-31_094732/config.yml
+playground/tmp/nerfacto/2023-01-31_094908/config.yml
+playground/tmp/nerfacto/2023-01-31_095650/config.yml
+playground/tmp/nerfacto/2023-01-31_101305/config.yml
+playground/tmp/nerfacto/2023-01-31_101410/config.yml
+playground/tmp/nerfacto/2023-02-01_074150/config.yml
+playground/tmp/nerfacto/2023-02-01_075607/config.yml
+playground/tmp/nerfacto/2023-02-01_114250/config.yml
+playground/tmp/nerfacto/2023-02-01_114318/config.yml
+playground/tmp/nerfacto/2023-02-01_114410/config.yml
+playground/tmp/nerfacto/2023-02-03_104934/config.yml
+playground/tmp/nerfacto/2023-02-03_105456/config.yml
+playground/tmp/nerfacto/2023-02-05_082859/config.yml
+playground/tmp/nerfacto/2023-02-08_120234/config.yml
+playground/tmp/nerfacto/2023-02-08_121105/config.yml
+playground/tmp/nerfacto/2023-02-08_121726/config.yml
+playground/tmp/nerfacto/2023-02-08_122026/config.yml
+playground/tmp/nerfacto/2023-02-08_122026/dataparser_transforms.json
+playground/tmp/nerfacto/2023-02-08_122441/config.yml
+playground/tmp/nerfacto/2023-02-08_122441/wandb/latest-run
+playground/tmp/nerfacto/2023-02-08_122441/wandb/run-20230208_122449-w6fr94nj/run-w6fr94nj.wandb
+playground/tmp/nerfacto/2023-02-08_122441/wandb/run-20230208_122449-w6fr94nj/files/conda-environment.yaml
+playground/tmp/nerfacto/2023-02-08_122441/wandb/run-20230208_122449-w6fr94nj/files/config.yaml
+playground/tmp/nerfacto/2023-02-08_122441/wandb/run-20230208_122449-w6fr94nj/files/requirements.txt
+playground/tmp/nerfacto/2023-02-08_122441/wandb/run-20230208_122449-w6fr94nj/files/wandb-metadata.json
+playground/tmp/nerfacto/2023-02-08_122441/wandb/run-20230208_122449-w6fr94nj/files/wandb-summary.json
+playground/tmp/nerfacto/2023-02-08_122627/config.yml
+playground/wandb
+playground/data
+
+scripts/wandb
+
+train_scripts/logs
+train_scripts/out_nerfacto
+train_scripts/wandb
+
+wandb/
+log/
