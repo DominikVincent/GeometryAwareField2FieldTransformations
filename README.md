@@ -45,24 +45,24 @@ Now that the data is extracted you can train the collection of NeRFs with train_
 ### Transformation Model Training
 You can create the final train configuration for the transformation model with the notebook playground/create_nesf_data_config.ipynb for it. Again adapt the paths in here. Ensure that the (NeRF) model config in there matches with the one used in train_scripts/train.bash. 
 
-Now that you have obtained a data config for the Transformation Model Training. You can train it using the provided scripts in train_scritps:
+Now that you have obtained a data config for the Transformation Model Training. You can train it using the provided scripts in train_scritps. If you want to use the field2field model you should switch to the field2field branch:
 - Stratified Point Transformer: train_scripts/train_nesf_stratified_toybox.bash
 - Custom transformer: train_scripts/train_nesf_big_toybox.bash
 - Pointnet: train_scripts/train_nesf_pointnet.bash
 
 Our code relies on logging data to weights and biases. We also use weights and biases to finetune pretrained models. You can start pretraining with any of the train_scripts/train_nesf_pretrain_[...] scripts. You can fine-tune a run called pretrained_run1 on W&B with: 
 ```
-./train_scripts/train_pretrained.py --data /path/to/transformation/model/data.config runs pretrained_run1
+./train_scripts/train_pretrained.py --proj_name "wandb_proj_name" --data /path/to/transformation/model/data.config runs pretrained_run1
 ```
 
 In case you use slurm you try to directly dispatch the runs to slurm via:
 ```
-./train_scripts/train_pretrained.py --slurm --data /path/to/transformation/model/data.config runs pretrained_run1 pretrained_run2 ...
+./train_scripts/train_pretrained.py --slurm --proj_name "wandb_proj_name" --data /path/to/transformation/model/data.config runs pretrained_run1 pretrained_run2 ...
 ```
 
 To evaluate a run first create the eval data config via playground/create_nesf_data_config.ipynb. Then one can evaluate the run from weights and biases run_name_1:
 ```
-./train_scripts/eval_sweep.py --eval_config /path/to/eval/data.config --proj_name "toybox-5-nesf" run run_name_1
+./train_scripts/eval_sweep.py --eval_config /path/to/eval/data.config --proj_name "wandb_proj_name" run run_name_1
 ```
 It should directly create a new run on W&B containing the results. 
 
