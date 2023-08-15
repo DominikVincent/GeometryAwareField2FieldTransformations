@@ -336,16 +336,10 @@ method_configs["phototourism"] = TrainerConfig(
 
 # RAYS_PER_BATCH = 131072
 RAYS_PER_BATCH = 65536
-# RAYS_PER_BATCH = 40000
-# RAYS_PER_BATCH = 32768
-# RAYS_PER_BATCH = 24576
-# RAYS_PER_BATCH=16384
-# RAYS_PER_BATCH=8192
-# RAYS_PER_BATCH=4096
-# RAYS_PER_BATCH=131072
+QUERY_RAYS_PER_BATCH = 32768
 MAX_NUM_ITERATIONS = 500000
 END_DECAY = 80000
-LR_START = 0.005
+LR_START = 0.006
 LR_END = LR_START * 0.1
 TRANSFORMER_LR_SCALE = 0.1
 method_configs["nesf"] = TrainerConfig(
@@ -360,18 +354,18 @@ method_configs["nesf"] = TrainerConfig(
     pipeline=NesfPipelineConfig(
         datamanager=NesfDataManagerConfig(
             dataparser=NesfDataParserConfig(),
-            train_num_rays_per_batch=RAYS_PER_BATCH,
-            eval_num_rays_per_batch=RAYS_PER_BATCH,
+            num_rays_per_neural_pointcloud=RAYS_PER_BATCH,
+            num_rays_per_query=QUERY_RAYS_PER_BATCH,
             steps_per_model=1,
-            train_num_images_to_sample_from=8,
+            train_num_images_to_sample_from=10,
             train_num_times_to_repeat_images=1,
-            eval_num_images_to_sample_from=8,
+            eval_num_images_to_sample_from=10,
             eval_num_times_to_repeat_images=4,
             camera_optimizer=CameraOptimizerConfig(
                 mode="off", optimizer=AdamOptimizerConfig(lr=6e-4, eps=1e-8, weight_decay=1e-2)
             ),
         ),
-        model=NeuralSemanticFieldConfig(eval_num_rays_per_chunk=RAYS_PER_BATCH, mode="semantics", pretrain=False),
+        model=NeuralSemanticFieldConfig(eval_num_rays_per_chunk=QUERY_RAYS_PER_BATCH, mode="semantics", pretrain=False),
     ),
     optimizers={
         "feature_network": {
@@ -410,8 +404,8 @@ method_configs["nesf"] = TrainerConfig(
             # "scheduler": None,
         },
         "field_transformer": {
-            "optimizer": AdamOptimizerConfig(lr=4E-5, eps=1e-13),
-            "scheduler": SchedulerConfig(lr_final=1E-6, max_steps=END_DECAY),
+            "optimizer": AdamOptimizerConfig(lr=LR_START*TRANSFORMER_LR_SCALE, eps=1e-13),
+            "scheduler": SchedulerConfig(lr_final=LR_END*TRANSFORMER_LR_SCALE, max_steps=END_DECAY),
             # "scheduler": None,
         },
     },
@@ -420,128 +414,6 @@ method_configs["nesf"] = TrainerConfig(
     vis="viewer",
     logging=LoggingConfig(steps_per_log=10),
 )
-
-
-method_configs["nesf_density"] = TrainerConfig(
-    method_name="nesf",
-    experiment_name="/tmp",
-    steps_per_eval_batch=100,
-    steps_per_eval_image=250,
-    steps_per_save=5000,
-    max_num_iterations=50000,
-    steps_per_eval_all_images=1000000,
-    mixed_precision=False,
-    pipeline=NesfPipelineConfig(
-        datamanager=NesfDataManagerConfig(
-            dataparser=NesfDataParserConfig(),
-            train_num_rays_per_batch=64,
-            eval_num_rays_per_batch=64,
-            steps_per_model=1,
-            camera_optimizer=CameraOptimizerConfig(
-                mode="off", optimizer=AdamOptimizerConfig(lr=6e-4, eps=1e-8, weight_decay=1e-2)
-            ),
-        ),
-        model=NeuralSemanticFieldConfig(
-            eval_num_rays_per_chunk=256,
-            mode="density",
-            feature_generator_config=FeatureGeneratorTorchConfig(
-                use_rgb=True,
-                out_rgb_dim=16,
-                use_density=False,
-                out_density_dim=8,
-                use_dir_encoding=True,
-                use_pos_encoding=True,
-                visualize_point_batch=False
-            ),
-            sampler=SceneSamplerConfig(),
-            pretrain=True,
-            feature_transformer_custom_config=TranformerEncoderModelConfig(
-                num_layers=4,
-                num_heads=8,
-                dim_feed_forward=64,
-                dropout_rate=0.1,
-                feature_dim=64,
-            ),
-            feature_decoder_custom_config=TranformerEncoderModelConfig(
-                num_layers=2,
-                num_heads=2,
-                dim_feed_forward=32,
-                dropout_rate=0.1,
-                feature_dim=32,
-            ),
-            density_prediction="direct",
-        ),
-    ),
-    optimizers={
-        "feature_network": {
-            "optimizer": AdamOptimizerConfig(lr=1e-4, eps=1e-13),
-            "scheduler": SchedulerConfig(lr_final=1e-5, max_steps=30000),
-            # "scheduler": None,
-        },
-        "feature_transformer": {
-            "optimizer": AdamOptimizerConfig(lr=1e-4, eps=1e-13),
-            "scheduler": SchedulerConfig(lr_final=1e-5, max_steps=30000),
-            # "scheduler": None,
-        },
-        "learned_low_density_params": {
-            "optimizer": AdamOptimizerConfig(lr=1e-4, eps=1e-13),
-            "scheduler": SchedulerConfig(lr_final=1e-5, max_steps=30000),
-            # "scheduler": None,
-        },
-        "decoder": {
-            "optimizer": AdamOptimizerConfig(lr=1e-4, eps=1e-13),
-            "scheduler": SchedulerConfig(lr_final=1e-5, max_steps=30000),
-            # "scheduler": None,
-        },
-        "head": {
-            "optimizer": AdamOptimizerConfig(lr=1e-4, eps=1e-13),
-            "scheduler": SchedulerConfig(lr_final=1e-5, max_steps=30000),
-            # "scheduler": None,
-        },
-    },
-    viewer=ViewerConfig(num_rays_per_chunk=64, websocket_port=7011, quit_on_train_completion=False),
-    save_only_latest_checkpoint=False,
-    vis="viewer",
-    logging=LoggingConfig(steps_per_log=10),
-)
-
-# method_configs["nesf"] = TrainerConfig(
-#     method_name="nesf",
-#     experiment_name="/tmp",
-#     steps_per_eval_batch=50,
-#     steps_per_eval_image=500,
-#     steps_per_save=500,
-#     max_num_iterations=10000,
-#     mixed_precision=False,
-#     pipeline=NesfPipelineConfig(
-#         datamanager=NesfDataManagerConfig(
-#             dataparser=NesfDataParserConfig(),
-#             train_num_rays_per_batch=32,
-#             eval_num_rays_per_batch=32,
-#             camera_optimizer=CameraOptimizerConfig(
-#                 mode="off", optimizer=AdamOptimizerConfig(lr=6e-4, eps=1e-8, weight_decay=1e-2)
-#             ),
-#         ),
-#         model=NeuralSemanticFieldConfig(eval_num_rays_per_chunk=64, rgb=False),
-#     ),
-#     optimizers={
-#         "feature_network": {
-#             "optimizer": AdamOptimizerConfig(lr=1e-4, eps=1e-15),
-#             "scheduler": None,
-#         },
-#         "feature_transformer": {
-#             "optimizer": AdamOptimizerConfig(lr=1e-2, eps=1e-15),
-#             "scheduler": None,
-#         },
-#         "learned_low_density_params": {
-#             "optimizer": AdamOptimizerConfig(lr=1e-2, eps=1e-15),
-#             "scheduler": None,
-#         },
-#     },
-#     viewer=ViewerConfig(num_rays_per_chunk=64, websocket_port=7011),
-#     save_only_latest_checkpoint=False,
-#     vis="viewer",
-# )
 
 
 AnnotatedBaseConfigUnion = tyro.conf.SuppressFixed[  # Don't show unparseable (fixed) arguments in helptext.

@@ -162,7 +162,7 @@ class Nerfstudio(DataParser):
                 depth_filepath = PurePath(frame["depth_file_path"])
                 depth_fname = self._get_fname(depth_filepath, data_dir, downsample_folder_prefix="depths_")
                 depth_filenames.append(depth_fname)
-
+            
             if "normal_file_path" in frame:
                 normal_filepath = PurePath(frame["normal_file_path"])
                 normal_fname = self._get_fname(normal_filepath, data_dir, downsample_folder_prefix="normals_")
@@ -173,7 +173,7 @@ class Nerfstudio(DataParser):
         assert (
             len(image_filenames) != 0
         ), """
-        No image files found.
+        No image files found. 
         You should check the file_paths in the transforms.json file to make sure they are correct.
         """
         assert len(mask_filenames) == 0 or (

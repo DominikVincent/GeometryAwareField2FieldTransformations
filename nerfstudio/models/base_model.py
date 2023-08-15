@@ -210,7 +210,7 @@ class Model(nn.Module):
         """
         state = {key.replace("module.", ""): value for key, value in loaded_state["model"].items()}
         missing_keys, unexpected_keys = self.load_state_dict(state, strict=True)  # type: ignore
-
+        
         print("Loaded model from checkpoint")
         print("Missing keys: ", missing_keys)
         print("Unexpected keys: ", unexpected_keys)

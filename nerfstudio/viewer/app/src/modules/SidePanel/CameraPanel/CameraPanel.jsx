@@ -118,7 +118,7 @@ function RenderTimeSelector(props) {
   const handleValidation = (e) => {
     const valueFloat = parseFloat(e.target.value);
     let valueStr = String(valueFloat);
-    if (e.target.value >= 0 && e.target.value <= 1){
+    if (e.target.value >= 0 && e.target.value <= 1){ 
       setValid(true);
       if (valueFloat === 1.0) {
         valueStr = '1.0';

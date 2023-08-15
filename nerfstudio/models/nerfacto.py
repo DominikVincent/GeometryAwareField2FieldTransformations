@@ -250,13 +250,13 @@ class NerfactoModel(Model):
             "accumulation": accumulation,
             "depth": depth,
         }
-
+        
         # from nerfstudio.utils.nesf_utils import visualize_point_batch
         # density_mask = (field_outputs[FieldHeadNames.DENSITY] > 0.5).squeeze(-1)
         # positions = ray_samples.frustums.get_positions()[density_mask].cpu().reshape(-1, 3)[:8192,:]
         # normals = field_outputs[FieldHeadNames.PRED_NORMALS][density_mask].clone().detach().cpu().reshape(-1, 3)[:8192,:]
         # visualize_point_batch(positions, ids_shuffle=None, normals=normals)
-
+        
 
         if self.config.predict_normals:
             outputs["normals"] = self.renderer_normals(normals=field_outputs[FieldHeadNames.NORMALS], weights=weights)
@@ -289,7 +289,7 @@ class NerfactoModel(Model):
         metrics_dict["psnr"] = self.psnr(outputs["rgb"], image)
         if self.training:
             metrics_dict["distortion"] = distortion_loss(outputs["weights_list"], outputs["ray_samples_list"])
-
+            
         if "normal_image" in batch:
             with torch.no_grad():
                 normals_gt = batch["normal_image"] * 2 - 1
@@ -298,7 +298,7 @@ class NerfactoModel(Model):
                 if "normals" in outputs:
                     # compute alignment error via dot product between predicted and ground truth normals
                     metrics_dict["analytic_normals_dot_error"] = torch.sum(normals_gt * normals_analytic, dim=-1).mean().item()
-
+                    
                 if "pred_normals" in outputs:
                     metrics_dict["predicted_normals_dot_error"] = torch.sum(normals_gt * normals_pred, dim=-1).mean().item()
         return metrics_dict
@@ -371,7 +371,7 @@ class NerfactoModel(Model):
                 accumulation=outputs["accumulation"],
             )
             images_dict[key] = prop_depth_i
-
+            
         if "normal_image" in batch:
             with torch.no_grad():
                 normals_gt = batch["normal_image"] * 2 - 1
@@ -380,7 +380,7 @@ class NerfactoModel(Model):
                 if "normals" in outputs:
                     # compute alignment error via dot product between predicted and ground truth normals
                     metrics_dict["analytic_normals_dot_error"] = torch.sum(normals_gt * normals_analytic, dim=-1)[(batch["depth_image"]<1).squeeze()].mean().item()
-
+                    
                 if "pred_normals" in outputs:
                     metrics_dict["predicted_normals_dot_error"] = torch.sum(normals_gt * normals_pred, dim=-1)[(batch["depth_image"]<1).squeeze()].mean().item()
 

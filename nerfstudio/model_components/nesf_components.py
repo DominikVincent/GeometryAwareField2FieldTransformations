@@ -28,8 +28,6 @@ from nerfstudio.utils.nesf_utils import (
     log_points_to_wandb,
     visualize_point_batch,
     visualize_points,
-    visualize_rgb_point_cloud,
-    visualize_rgb_point_cloud_masked
 )
 
 CONSOLE = Console(width=120)
@@ -72,7 +70,7 @@ class SceneSampler:
 
     def __init__(self, config: SceneSamplerConfig):
         self.config = config
-
+        
         # maps scene to plane parameters (a, b, c, d)
         self.plane_cache = {}
 
@@ -114,12 +112,10 @@ class SceneSampler:
         else:
             raise NotImplementedError("Only NerfactoModel is supported for now")
 
-        # visualize_rgb_point_cloud(ray_samples.frustums.get_positions(), field_outputs[FieldHeadNames.RGB])
-
         time2 = time.time()
         if self.config.surface_sampling:
             ray_samples, weights, field_outputs = self.surface_sampling(ray_samples, weights, field_outputs)
-
+        
         time3 = time.time()
         original_fields_outputs = {}
         original_fields_outputs[FieldHeadNames.DENSITY] = field_outputs[FieldHeadNames.DENSITY].detach().clone()
@@ -132,15 +128,15 @@ class SceneSampler:
                 original_fields_outputs[FieldHeadNames.NORMALS] = field_outputs[FieldHeadNames.NORMALS].detach().clone()
 
         original_fields_outputs["ray_samples"] = ray_samples
-
+        
         density_mask = self.get_density_mask(field_outputs)
         time5 = time.time()
         pos_mask = self.get_pos_mask(ray_samples)
         time6 = time.time()
 
         total_mask = density_mask & pos_mask
-
-
+        
+        
         # only compute ground points from filter points
         if self.config.ground_removal_mode == "ransac":
             non_ground_mask = self.get_non_ground_mask_ground_plane_fitting(ray_samples, total_mask, model_idx)
@@ -150,7 +146,7 @@ class SceneSampler:
             non_ground_mask = torch.ones_like(total_mask)
         else:
             raise NotImplementedError("Only ransac and min are supported for now")
-
+        
         time7 = time.time()
         total_mask = total_mask & non_ground_mask
 
@@ -158,7 +154,7 @@ class SceneSampler:
         time8 = time.time()
         ray_samples, weights, field_outputs = self.apply_mask(ray_samples, weights, field_outputs, final_mask)
         time9 = time.time()
-
+        
         # visualize_point_batch(ray_samples.frustums.get_positions())
         # CONSOLE.print(f"Sampler: query nerf: {time2-time1}")
         # CONSOLE.print(f"Sampler: surface sampling: {time3-time2}")
@@ -214,72 +210,72 @@ class SceneSampler:
     def get_pos_mask(self, ray_samples) -> TensorType["N_rays", "N_samples"]:
         # true for points to keep
         points = ray_samples.frustums.get_positions()
-
+        
         # visualize_point_batch(points.cpu().view(-1, 3))
-
+        
         points_dense_mask = (points[..., 2] > self.config.z_value_threshold) & (
             torch.norm(points[..., :2], dim=-1) <= self.config.xy_distance_threshold
         )
         # visualize_point_batch(points[points_dense_mask].cpu().view(-1, 3))
-
+        
         # print(points_dense_mask)
         return points_dense_mask
-
+    
     def get_non_ground_mask(self, ray_samples, mask: TensorType) -> TensorType["N_rays", "N_samples"]:
         # returns true for non ground points
         points = ray_samples.frustums.get_positions()
-
+        
         filtered_points = points[mask]
-
+        
         sorted_z = torch.sort(filtered_points[..., 2].flatten())[0]
         ground_z = sorted_z[:self.config.ground_points_count].median()
-
+        
         distances = points[..., 2] - ground_z
-
+        
         # Create a mask for all points with a distance greater than the tolerance
         mask = distances > self.config.ground_tolerance
-
+        
         return mask
-
+    
     def get_non_ground_mask_ground_plane_fitting(self, ray_samples, mask: TensorType, scene_idx: int) -> TensorType["N_rays", "N_samples"]:
         # returns true for non ground points
         time_start = time.time()
         points = ray_samples.frustums.get_positions()
-
-
+        
+        
         if scene_idx in self.plane_cache:
             a, b, c, d = self.plane_cache[scene_idx]
         else:
             filtered_points = points[mask]
             # visualize_point_batch(points.cpu().unsqueeze(0))
-
+            
             # find lowest z point
             sorted_z = torch.sort(filtered_points[..., 2].flatten())[0]
             ground_z = sorted_z[:self.config.ground_points_count].median()
-
+            
             filtered_points = filtered_points[filtered_points[..., 2] < ground_z + 2 * self.config.ground_tolerance]
-
+            
             # visualize_point_batch(filtered_points.cpu().unsqueeze(0))
-
-            model = RANSACRegressor(max_trials=100)
+            
+            model = RANSACRegressor()
             model.fit(filtered_points[..., :2].cpu(), filtered_points[..., 2].cpu())
-
+            
             # Extract the parameters of the fitted plane
             # TODO check that c is always -1
             a, b, c, d = model.estimator_.coef_[0], model.estimator_.coef_[1], -1, model.estimator_.intercept_
             self.plane_cache[scene_idx] = (a, b, c, d)
-
+        
         if c < 0:
             a, b, c, d = -a, -b, -c, -d
-
+        
         # Calculate the distance of each point from the fitted plane
         distances = (a * points[..., 0] + b * points[..., 1] + c * points[..., 2] + d) / np.sqrt(a**2 + b**2 + c**2)
-
+        
         # Create a mask for all points with a distance greater than the threshold
         mask = distances > self.config.ground_tolerance
-
+        
         time_end = time.time()
-        print("Ground plane fitting took: ", time_end - time_start, " seconds")
+        # print("Ground plane fitting took: ", time_end - time_start, " seconds")
         print("Mask", mask)
         return mask
 
@@ -323,7 +319,7 @@ class SceneSampler:
 
         # all but density_mask should have the reduced size
         return ray_samples, weights, field_outputs
-
+    
     def clear_ground_cache(self):
         self.plane_cache = {}
 
@@ -333,13 +329,13 @@ class MaskerConfig(InstantiateConfig):
 
     mask_ratio: float = 0.75
     """The number of points which should be masked approximatly"""
-
+    
     mode: Literal["random", "patch", "patch_fp"] = "random"
     """The mode of masking to use"""
-
+    
     pos_encoder: Literal["sin", "rff"] = "sin"
     """what kind of feature encoded should be used?"""
-
+    
     num_patches: int = 25
     """How many centroids should be used for the patch mode. Patches will evolve around centroids"""
 
@@ -348,13 +344,13 @@ class MaskerConfig(InstantiateConfig):
 class Masker(nn.Module):
     def __init__(self, config: MaskerConfig, output_size: int):
         super().__init__()
-
+        
         self.config = config
-
+        
         mask_token_value = torch.empty(1, 1, output_size)
         torch.nn.init.kaiming_normal_(mask_token_value)
         self.mask_token = torch.nn.Parameter(mask_token_value, requires_grad=True)
-
+        
         if self.config.pos_encoder == "sin":
             self.pos_encoder = NeRFEncoding(
                 in_dim=3, num_frequencies=7, min_freq_exp=0.0, max_freq_exp=7.0, include_input=True
@@ -364,34 +360,32 @@ class Masker(nn.Module):
         else:
             raise ValueError(f"Unknown pos encoder {self.config.pos_encoder}")
         assert self.pos_encoder.get_out_dim() <= output_size
-
+        
     def forward(self, x: torch.Tensor, batch: dict):
         self.mask(x, batch)
-
+        
     def mask(self, x: torch.Tensor, batch: dict) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor, dict]:
         """Mask a certain amount of points in the batch for the encoder. It will filter out the mask points"""
         if self.config.mask_ratio == 0:
             return x, torch.empty((1,)), torch.empty((1,)), {}
-
+        
         if self.config.mode == "random":
             ids_keep, ids_mask, ids_restore =  self.random_mask(x, batch)
         elif self.config.mode == "patch" or self.config.mode == "patch_fp":
             ids_keep, ids_mask, ids_restore =  self.patch_mask(x, batch)
-        else:
+        else: 
             raise ValueError(f"Unknown masking mode {self.config.mode}")
-
+        
         N, L, D = x.shape  # batch, length, dim
         len_keep = int(L * (1 - self.config.mask_ratio))
-
+        
         batch["points_xyz_all"] = batch["points_xyz"]
         batch["points_xyz"] = torch.gather(batch["points_xyz"], dim=1, index=ids_keep.unsqueeze(-1).repeat(1, 1, 3))
-        rgb_keep = torch.gather(batch["rgb"], dim=1, index=ids_keep.unsqueeze(-1).repeat(1, 1, 3))
         batch["points_xyz_masked"] = torch.gather(batch["points_xyz_all"], dim=1, index=ids_mask.unsqueeze(-1).repeat(1, 1, 3))
-        rgb_masked = torch.gather(batch["rgb"], dim=1, index=ids_mask.unsqueeze(-1).repeat(1, 1, 3))
         if "src_key_padding_mask" in batch and batch["src_key_padding_mask"] is not None:
             batch["src_key_padding_mask_orig"] = batch["src_key_padding_mask"]
             batch["src_key_padding_mask"] = torch.gather(batch["src_key_padding_mask"], dim=1, index=ids_keep)
-
+        
         # generate the binary mask: 0 is keep, 1 is remove
         mask = torch.ones([N, L], device=x.device)
         mask[:, :len_keep] = 0
@@ -400,33 +394,32 @@ class Masker(nn.Module):
         x_masked = torch.gather(x, dim=1, index=ids_keep.unsqueeze(-1).repeat(1, 1, D))
 
         if self.config.visualize_masking:
-            # visualize_rgb_point_cloud_masked(batch["points_xyz"], rgb_keep, batch["points_xyz_masked"])
             points_stack = torch.cat([batch["points_xyz"], batch["points_xyz_masked"]], dim=1)
             labels = torch.cat([torch.ones((N, len_keep)), torch.zeros((N, L - len_keep))], dim=1).long()
             visualize_point_batch(points_stack, classes=labels)
             input("Press Enter to continue...")
         return x_masked, mask, ids_restore, batch
-
+    
     def unmask(self, x: torch.Tensor, batch: dict, ids_restore: torch.Tensor):
         """Unmask the points in the batch for the decoder. It will filter out the mask points"""
-
+        
         if self.config.mask_ratio == 0:
             return x, batch
-
+        
         mask_tokens = self.mask_token.repeat(x.shape[0], ids_restore.shape[1] - x.shape[1], 1)
-
+        
         # add position encoding to the mask tokens
         mask_tokens[..., :self.pos_encoder.get_out_dim()] = mask_tokens[..., :self.pos_encoder.get_out_dim()] + self.pos_encoder(batch["points_xyz_masked"])
-
+        
         # visualize_point_batch(batch["points_xyz_masked"])
-
+        
         x_ = torch.cat([x, mask_tokens], dim=1)  # no cls token
         x = torch.gather(x_, dim=1, index=ids_restore.unsqueeze(-1).repeat(1, 1, x.shape[2]))  # unshuffle
         batch["points_xyz"] = batch["points_xyz_all"]
         if "src_key_padding_mask_orig" in batch:
             batch["src_key_padding_mask"] = batch["src_key_padding_mask_orig"]
         return x, batch
-
+    
     def random_mask(self, x: torch.Tensor, batch: dict):
         """
         Perform per-sample random masking by per-sample shuffling.
@@ -449,14 +442,14 @@ class Masker(nn.Module):
         ids_mask = ids_shuffle[:, len_keep:]
 
         return ids_keep, ids_mask, ids_restore
-
+    
     def patch_mask(self, x: torch.Tensor, batch: dict):
         """
         Mask a ceratin amount of points. The result should be patches which are masked.
         """
-
+        
         N, L, C = x.shape
-
+        
         ratio = self.config.mask_ratio
         points = batch["points_xyz"]
 
@@ -485,11 +478,11 @@ class Masker(nn.Module):
 
     def furthest_point_sampling(self, points, K):
         B, N, _ = points.shape
-
+        
         centroids = torch.zeros(B, K, 3, device=points.device)
         distance = torch.ones(B, N, device=points.device) * 1e10
         farthest = torch.randint(0, N, (B,), device=points.device)
-
+        
         batch_indices = torch.arange(B, device=points.device)
         for i in range(K):
             centroids[:, i] = points[batch_indices, farthest]
@@ -498,7 +491,7 @@ class Masker(nn.Module):
             mask = dist < distance
             distance[mask] = dist[mask]
             farthest = torch.max(distance, -1)[1]
-
+            
         return centroids
 
 @dataclass
@@ -519,21 +512,15 @@ class FeatureGeneratorTorchConfig(InstantiateConfig):
 
     use_dir_encoding: bool = False
     """Should the direction encoding be used as a feature?"""
-
+    
     use_normal_encoding: bool = False
     """Should the direction encoding be used as a feature?"""
 
     rot_augmentation: bool = True
     """Should the random rot augmentation around the z axis be used?"""
-
+    
     jitter: float = 0.0
     """How much jitter should be used in the augmentation?"""
-
-    jitter_clip: float = 10000.0
-    """At what value the jitter should be clipped."""
-
-    random_scale: float = 1.0
-    """random scaling down of the point cloud. 1.0 means no scaling, 0.5 means all points are getting scaled by 0.5 down. Can't be bigger than 1.0"""
 
     visualize_point_batch: bool = False
     """Visualize the points of the batch? Useful for debugging"""
@@ -626,9 +613,9 @@ class FeatureGeneratorTorch(nn.Module):
             assert not torch.isinf(rgb_out).any()
 
             encodings.append(rgb_out)
-
+        
         time2 = time.time()
-
+        
         if self.config.use_density:
             density = field_outputs[FieldHeadNames.DENSITY]
             # normalize density between 0 and 1
@@ -647,21 +634,21 @@ class FeatureGeneratorTorch(nn.Module):
             density = self.density_linear(density)
             assert not torch.isnan(density).any()
             encodings.append(density)
-
+        
         time3 = time.time()
-
+        
         if self.config.rot_augmentation and self.training:
             batch_size = transform_batch["points_xyz"].shape[0]
             angles_np = np.random.uniform(0, 2 * np.pi, size=(batch_size,)).astype('f')
             angles = torch.from_numpy(angles_np)
-
+            
             # Construct the rotation matrices from the random angles.
             zeros = torch.zeros_like(angles)
             ones = torch.ones_like(angles)
             c = torch.cos(angles)
             s = torch.sin(angles)
-
-
+            
+            
             rot_matrix = torch.stack(
                 [
                     torch.stack([c, -s, zeros], dim=-1),
@@ -673,38 +660,28 @@ class FeatureGeneratorTorch(nn.Module):
 
         else:
             rot_matrix = torch.eye(3, device=device).unsqueeze(0)
-
+        
         time4 = time.time()
         transform_batch["rot_mat"] = rot_matrix
         positions = transform_batch["points_xyz"]
 
         if self.config.rot_augmentation:
             # TODO consider turning that off if not self.training()
-            positions = torch.matmul(positions, rot_matrix)
+            positions = torch.matmul(positions, rot_matrix) 
             # normalize postions to be within scene bounds  self.aabb: Tensor[2,3]
             # TODO if needed add the normalizeation for now hardcode clamp
             # positions = torch.clamp(positions, self.aabb[0], self.aabb[1])
-
+            
         if self.config.jitter != 0.0 and self.training:
-            jitter = torch.randn_like(positions) * self.config.jitter
-            # clip the jitter
-            jitter = torch.clamp(jitter, -self.config.jitter_clip, self.config.jitter_clip)
-            positions = positions + jitter
-
+            positions = positions + torch.randn_like(positions) * self.config.jitter
+            
         time5 = time.time()
-        positions = self.normalize_positions(positions)
+        positions = self.normalize_positions(positions)            
         time6 = time.time()
-
+        
         positions = cast(TensorType, positions)
         # The positions need to be in [0,1] for the positional encoding
         positions_normalized = SceneBox.get_normalized_positions(positions, self.aabb)
-
-        if self.config.random_scale != 1.0 and self.training:
-            scale = torch.rand(1, device=device) * (1.0 - self.config.random_scale) + self.config.random_scale
-            positions_normalized = positions_normalized * scale
-            assert torch.all(positions_normalized >= 0.0)
-            assert torch.all(positions_normalized <= 1.0)
-
         transform_batch["points_xyz"] = positions_normalized
 
         # assert that the points are between 0 and 1
@@ -715,7 +692,7 @@ class FeatureGeneratorTorch(nn.Module):
         # mean = torch.mean(positions_normalized, dim=1).unsqueeze(1)
         # dist = torch.norm(positions_normalized - mean, dim=-1).max()
         time7 = time.time()
-
+        
         assert ((not self.config.use_normal_encoding) or FieldHeadNames.NORMALS in field_outputs)
         if FieldHeadNames.NORMALS in field_outputs or FieldHeadNames.PRED_NORMALS in field_outputs:
             normals = field_outputs[FieldHeadNames.PRED_NORMALS] if FieldHeadNames.PRED_NORMALS in field_outputs else field_outputs[FieldHeadNames.NORMALS]
@@ -732,7 +709,7 @@ class FeatureGeneratorTorch(nn.Module):
             pos_encoding = self.pos_encoder(positions_normalized)
             assert not torch.isnan(pos_encoding).any()
             encodings.append(pos_encoding)
-
+        
         time9 = time.time()
         if self.config.use_dir_encoding:
             directions = transform_batch["directions"]
@@ -753,63 +730,63 @@ class FeatureGeneratorTorch(nn.Module):
 
         if "src_key_padding_mask" in transform_batch and transform_batch["src_key_padding_mask"] is not None:
             out[transform_batch["src_key_padding_mask"]] = self.learned_mask_value
-
+            
         # positions_normalized = (positions_normalized - mean) / dist
         if self.config.visualize_point_batch:
             if "normals" in transform_batch:
-                # visualize_point_batch(transform_batch["points_xyz"], normals=transform_batch["normals"])
-                visualize_point_batch(transform_batch["points_xyz"])
-
+                visualize_point_batch(transform_batch["points_xyz"], normals=transform_batch["normals"])
+                # visualize_point_batch(transform_batch["points_xyz"])
+                
             else:
                 visualize_point_batch(transform_batch["points_xyz"])
             a = input("press enter to continue...")
 
         if self.config.log_point_batch and random.random() < (1 / 5000):
             log_points_to_wandb(transform_batch["points_xyz"])
-
+        
         time11 = time.time()
-        CONSOLE.print("FeatureGenerator - time1: ", time2 - time1)
-        CONSOLE.print("FeatureGenerator - time2: ", time3 - time2)
-        CONSOLE.print("FeatureGenerator - time3: ", time4 - time3)
-        CONSOLE.print("FeatureGenerator - time4: ", time5 - time4)
-        CONSOLE.print("FeatureGenerator - time5: ", time6 - time5)
-        CONSOLE.print("FeatureGenerator - time6: ", time7 - time6)
-        CONSOLE.print("FeatureGenerator - time7: ", time8 - time7)
-        CONSOLE.print("FeatureGenerator - time8: ", time9 - time8)
-        CONSOLE.print("FeatureGenerator - time9: ", time10 - time9)
-        CONSOLE.print("FeatureGenerator - time10: ", time11 - time10)
+        # CONSOLE.print("FeatureGenerator - time1: ", time2 - time1)
+        # CONSOLE.print("FeatureGenerator - time2: ", time3 - time2)
+        # CONSOLE.print("FeatureGenerator - time3: ", time4 - time3)
+        # CONSOLE.print("FeatureGenerator - time4: ", time5 - time4)
+        # CONSOLE.print("FeatureGenerator - time5: ", time6 - time5)
+        # CONSOLE.print("FeatureGenerator - time6: ", time7 - time6)
+        # CONSOLE.print("FeatureGenerator - time7: ", time8 - time7)
+        # CONSOLE.print("FeatureGenerator - time8: ", time9 - time8)
+        # CONSOLE.print("FeatureGenerator - time9: ", time10 - time9)
+        # CONSOLE.print("FeatureGenerator - time10: ", time11 - time10)
         return out, transform_batch
 
     def normalize_positions(self, points: torch.tensor) -> torch.tensor:
         # normalize points to be within 0, 1 for x,y
         min_points = torch.min(points, dim=-2).values
         max_points = torch.max(points, dim=-2).values
-
+        
         scene_range = self.aabb[1] - self.aabb[0]
         scene_min = self.aabb[0]
-
+        
         x_range = (max_points[:, 0] - min_points[:, 0]).unsqueeze(-1)
         y_range = (max_points[:, 1] - min_points[:, 1]).unsqueeze(-1)
         z_range = (max_points[:, 2] - min_points[:, 2]).unsqueeze(-1)
-
+        
         # choose the biggest range for normalization
         range = torch.max(torch.max(x_range, y_range), z_range)
-
+        
         # points[:, :, 0] = (points[:, :, 0] - min_points[:, 0].unsqueeze(-1)) / range
         # points[:, :, 1] = (points[:, :, 1] - min_points[:, 1].unsqueeze(-1)) / range
         # points[:, :, 2] = (points[:, :, 2] - min_points[:, 2].unsqueeze(-1)) / range
-
+        
         points = (points - min_points.unsqueeze(1)) / range.unsqueeze(-1)
-
+        
         points = points * scene_range + scene_min
-
+        
         # check that the points are within the scene bounds
         assert torch.all(points >= self.aabb[0])
         assert torch.all(points <= self.aabb[1])
-
+        
         return points
-
-
+        
+    
     def get_out_dim(self) -> int:
         total_dim = 0
         total_dim += self.config.out_rgb_dim if self.config.use_rgb else 0
@@ -1014,24 +991,24 @@ class StratifiedTransformerWrapper(nn.Module):
 
         if self.config.load_dir != "":
             state_dict = torch.load(self.config.load_dir)["state_dict"]
-
+            
             total_parameters_state_dict = sum(p.numel() for p in state_dict.values())
-
+            
             # replace keys starting with module with model, _tables do not fit shapes
             state_dict = {key.replace("module", "model"): value for key, value in state_dict.items() }
             if input_size != 3:
                 state_dict = {key.replace("module", "model"): value for key, value in state_dict.items() if not key.endswith("_table")}
 
             parameters_filtered = sum(p.numel() for p in state_dict.values())
-
+            
             CONSOLE.print("State dict has ", parameters_filtered, " parameters out of ", total_parameters_state_dict, " parameters")
-
+            
             missing_keys, unexpected_keys = self.load_state_dict(state_dict, strict=False)
             CONSOLE.print("Loaded feature transformer from pretrained checkpoint")
             CONSOLE.print("Feature Transformer missing keys", missing_keys)
             CONSOLE.print("Feature Transformer unexpected keys", unexpected_keys)
 
-
+                
     def forward(self, x: torch.Tensor, batch: dict):
         def batch_for_stratified_point_transformer(points, features):
             batch_size = points.shape[0]
@@ -1072,7 +1049,7 @@ class StratifiedTransformerWrapper(nn.Module):
 
     def get_out_dim(self) -> int:
         return self.config.channels[0]
-
+    
 
 
 @dataclass
@@ -1093,7 +1070,7 @@ class FieldTransformer(nn.Module):
         super().__init__()
         self.config = config
         self.activation = activation
-
+        
         self.transformer = self.config.transformer.setup(input_size=input_size+3)
         self.head = nn.Linear(self.transformer.get_out_dim(), input_size)
 
@@ -1105,19 +1082,24 @@ class FieldTransformer(nn.Module):
             query_pos: [N', 3]
             neural_feat: [N, C]
             neural_pos: [N, 3]
-
+        
         Returns:
             [N', C] tensor
         """
-
+        time1 = time.time()
         assert neural_feat.shape[0] == neural_pos.shape[0], "neural_feat and neural_pos must have the same count of points"
-        CONSOLE.print("Querying ", query_pos.shape[0], "points in neural field of ", neural_pos.shape[0])
+        # CONSOLE.print("Querying ", query_pos.shape[0], "points in neural field of ", neural_pos.shape[0])
         closest_ind, closest_dists = self.get_k_closest_points(query_pos, neural_pos)  # shape: [N', k]
 
         # Get the features of the k closest points
         closest_feat = neural_feat[closest_ind]  # shape: [N', k, C]
         closest_points = neural_pos[closest_ind]  # shape: [N', k, 3]
 
+        # points_stacked = torch.cat([query_pos.unsqueeze(0), neural_pos.unsqueeze(0)], dim=1)
+        # labels = torch.cat([torch.ones(1, query_pos.shape[0]), torch.zeros(1, neural_pos.shape[0])], dim=1).long()
+        # visualize_point_batch(points_stacked, classes=labels)
+        time2 = time.time()
+        # CONSOLE.print("FieldTransformer - prestep: ", time2 - time1)
         if self.config.mode == "mean":
             inv_dist = 1.0 / (closest_dists + 1e-5)  # shape: [N', k]
             weighted_features = closest_feat * inv_dist.unsqueeze(-1)  # shape: [N', k, C]
@@ -1132,7 +1114,11 @@ class FieldTransformer(nn.Module):
             # prepend the learnable query vector
             rel_pos_feat = torch.cat([rel_pos_feat, self.learnable_query_vector.unsqueeze(0).expand(rel_pos_feat.shape[0], -1, -1)], dim=1)  # shape: [N', k + 1, 3 + C]
             # apply the transformer
+            time3 = time.time()
             rel_pos_feat = self.transformer(rel_pos_feat, batch={})  # shape: [N', k + 1, C]
+            time4 = time.time()
+            # CONSOLE.print("FieldTransformer - transformer: ", time4 - time3)
+            
             # get the features of the query points
             retrieved_feat = rel_pos_feat[:, 0, :]  # shape: [N', C]
 
@@ -1141,7 +1127,7 @@ class FieldTransformer(nn.Module):
         return retrieved_feat
 
 
-    def get_k_closest_points(self, query_pos, neural_pos):
+    def get_k_closest_points_deprecated(self, query_pos, neural_pos):
         # Gets the k closests points for each quesry point
         # Compute Euclidean distance between each pair of points
         dists = torch.cdist(query_pos, neural_pos)  # shape: [N', N]
@@ -1150,5 +1136,24 @@ class FieldTransformer(nn.Module):
         dist, indices = torch.topk(dists, self.config.knn, largest=False, sorted=True, dim=-1)  # shape: [N', k]
 
         # dummy data
-        # indices = torch.zeros(query_pos.shape[0], self.config.knn, dtype=torch.int64, device=query_pos.device)
+        # indices = torch.randint(low=0, high=neural_pos.shape[0]-1, size=(query_pos.shape[0], self.config.knn), dtype=torch.int64, device=query_pos.device)
+        # dist = None
         return indices, dist
+    
+    def get_k_closest_points(self, query_pos, neural_pos, batch_size=1024):
+        query_size = query_pos.size(0)
+        neural_size = neural_pos.size(0)
+        dtype = query_pos.dtype
+        device = query_pos.device
+        knn_distances = torch.zeros((query_size, self.config.knn), dtype=dtype, device=device)
+        knn_indices = torch.zeros((query_size, self.config.knn), dtype=torch.long, device=device)
+
+        for i in range(0, query_size, batch_size):
+            # get batch from QUERY_P
+            batch = query_pos[i:min(i + batch_size, query_size)]
+            distances = torch.cdist(batch, neural_pos)
+            knn = distances.topk(self.config.knn, dim=1, largest=False, sorted=True)
+            knn_distances[i:min(i + batch_size, query_size)] = knn.values
+            knn_indices[i:min(i + batch_size, query_size)] = knn.indices
+
+        return knn_indices, knn_distances

@@ -52,7 +52,7 @@ class InputDataset(Dataset):
 
     def __len__(self):
         return len(self._dataparser_outputs.image_filenames)
-
+    
     def get_numpy_image_from_path(self, image_filename: Path) -> npt.NDArray[np.uint8]:
         pil_image = Image.open(image_filename)
         if self.scale_factor != 1.0:

@@ -91,8 +91,8 @@ class DepthNerfactoModel(NerfactoModel):
                     depth_loss_type=self.config.depth_loss_type,
                 ) / len(outputs["weights_list"])
 
-
-
+        
+                
         return metrics_dict
 
     def get_loss_dict(self, outputs, batch, metrics_dict=None):

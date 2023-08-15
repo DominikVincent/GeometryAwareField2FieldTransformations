@@ -113,7 +113,7 @@ class NesfDataParserConfig(DataParserConfig):
     _target: Type = field(default_factory=lambda: Nesf)
 
     data_config: Path = Path("")
-    """Path to the config of the Nesf data. It's a json {config:[{model_config: config, data_parser_config: config, load_step: 1, load_dir:1},
+    """Path to the config of the Nesf data. It's a json {config:[{model_config: config, data_parser_config: config, load_step: 1, load_dir:1}, 
     ...]}"""
 
 
@@ -133,9 +133,9 @@ class Nesf(DataParser):
             data_config = load_from_json(self.config.data_config / "data_config.json")
 
         put_config("config", data_config, 0)
-
+        
         CONSOLE.print("Memory usage: ", get_memory_usage())
-
+        
         data_parser_outputs = []
         with concurrent.futures.ThreadPoolExecutor(max_workers=32) as executor:
             futures = []
@@ -207,14 +207,14 @@ class Nesf(DataParser):
         CONSOLE.print("Returned NESF dataparser outputs")
         data_parser_outputs.sort(key=lambda x: int(x.image_filenames[0].parent.name))
         return data_parser_outputs
-
-
+    
+    
     def process_conf(self, conf, split):
         print("split: ", split)
         print("conf:", conf["data_parser_config"])
         print(conf.get("set_type", "train"))
         CONSOLE.print("Current mem usage before parsing: ", get_memory_usage())
-
+        
 
         nerfstudio = NerfstudioDataParserConfig(**conf["data_parser_config"]).setup()
         # TODO find a more global solution for casting instead of just one key
@@ -223,7 +223,7 @@ class Nesf(DataParser):
         if "set_type" in conf:
             split = conf["set_type"]
         dataparser_output = nerfstudio.get_dataparser_outputs(split=split)
-
+        
         CONSOLE.print(f"[green] loaded dataparser_output from {nerfstudio.config.data}")
         print(len(dataparser_output.image_filenames))
         print([int(path.name[5:-4]) for path in dataparser_output.image_filenames])
@@ -246,7 +246,7 @@ class Nesf(DataParser):
             number = image_name.split("_")[1]
             semantic_paths.append(base_path / f"segmentation_{number}.png")
 
-
+        
         if "klevr" in conf["data_parser_config"]["data"]:
             classes = SEMANTIC_CLASSES_CLEVR_OBJECTS
         elif "toybox-5" in conf["data_parser_config"]["data"]:

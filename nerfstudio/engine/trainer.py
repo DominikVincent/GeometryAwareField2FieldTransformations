@@ -89,9 +89,6 @@ class TrainerConfig(ExperimentConfig):
     """If set it will"""
     wandb_project_name: str = "toybox-5-nesf"
 
-    gradient_accumulation_steps: int = 1
-    """Number of steps to accumulate gradients over before taking an optimizer step."""
-
 
 class Trainer:
     """Trainer class
@@ -283,7 +280,7 @@ class Trainer:
 
                 writer.write_out_storage()
                 # profiler.step()
-
+                
                 # if step > 600:
                 #     broken = list(self.pipeline.model.broken_normals.keys())
                 #     # save broken normals list to txt
@@ -444,28 +441,27 @@ class Trainer:
         Args:
             step: Current training step.
         """
+        self.optimizers.zero_grad_all()
         cpu_or_cuda_str = self.device.split(":")[0]
         time1 = time.time()
         with torch.autocast(device_type=cpu_or_cuda_str, enabled=self.mixed_precision):
             _, loss_dict, metrics_dict = self.pipeline.get_train_loss_dict(step=step)
             loss = functools.reduce(torch.add, loss_dict.values())
-
-        loss = loss / self.config.gradient_accumulation_steps
-
         time2 = time.time()
         self.grad_scaler.scale(loss).backward()  # type: ignore
         time3 = time.time()
-        if step % self.config.gradient_accumulation_steps == 0:
-            self.optimizers.optimizer_scaler_step_all(self.grad_scaler)
-            time4 = time.time()
-            self.grad_scaler.update()
-            time5 = time.time()
-            self.optimizers.scheduler_step_all(step)
-            time6 = time.time()
-            self.optimizers.zero_grad_all()
+        self.optimizers.optimizer_scaler_step_all(self.grad_scaler)
+        time4 = time.time()
+        self.grad_scaler.update()
+        time5 = time.time()
+        self.optimizers.scheduler_step_all(step)
+        time6 = time.time()
 
-
-
+        CONSOLE.print("Trainer: get train loss dict: ", time2 - time1)
+        CONSOLE.print("Trainer: backward: ", time3 - time2)
+        CONSOLE.print("Trainer: optimizer step: ", time4 - time3)
+        CONSOLE.print("Trainer: grad scaler update: ", time5 - time4)
+        CONSOLE.print("Trainer: scheduler step: ", time6 - time5)
         # Merging loss and metrics dict into a single output.
 
         return loss, loss_dict, metrics_dict

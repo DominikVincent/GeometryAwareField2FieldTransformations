@@ -54,9 +54,9 @@ class DepthDataset(InputDataset):
         depth_image = get_depth_image_from_path(
             filepath=depth_filepath, height=height, width=width, scale_factor=scale_factor
         )
-
+        
         metadata = {"depth_image": depth_image}
-
+        
         if self.normal_filenames is not None:
             normal_filepath = self.normal_filenames[data["image_idx"]]
             normal_image = torch.from_numpy(self.get_numpy_image_from_path(normal_filepath).astype("float32") / 255.0)

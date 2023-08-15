@@ -60,16 +60,18 @@ class NesfDataManagerConfig(InstantiateConfig):
     _target: Type = field(default_factory=lambda: NesfDataManager)
     """Target class to instantiate."""
     dataparser: AnnotatedDataParserUnion = NerfstudioDataParserConfig()
-    """Specifies the dataparser used to unpack the data."""
     train_num_rays_per_batch: int = 1024
-    """Number of rays per batch to use per training iteration."""
+    """Just a value for calculating num rays per second correctly"""
+    """Specifies the dataparser used to unpack the data."""
+    num_rays_per_neural_pointcloud: int = 1024
+    """Number of rays per batch to use to generate the neural pointcloud."""
+    num_rays_per_query: int = 1024
+    """Number of rays per batch to use to query the neural point cloud."""
     train_num_images_to_sample_from: int = 4
     """Number of images to sample during training iteration."""
     train_num_times_to_repeat_images: int = 4
     """When not training on all images, number of iterations before picking new
     images. If -1, never pick new images."""
-    eval_num_rays_per_batch: int = 1024
-    """Number of rays per batch to use per eval iteration."""
     eval_num_images_to_sample_from: int = 4
     """Number of images to sample during eval iteration."""
     eval_num_times_to_repeat_images: int = 4
@@ -133,7 +135,8 @@ class NesfDataManager(DataManager):  # pylint: disable=abstract-method
         self.last_model = None
         self.last_model_idx = None
         self.last_eval_model = None
-        self.last_eval_model_idx = None
+        self.last_eval_model_idx = None  
+        self.config.train_num_rays_per_batch = self.config.num_rays_per_query
         CONSOLE.print(f"Datamanager mem usage: ", get_memory_usage())
         self.dataparser: Nesf = self.config.dataparser.setup()
         CONSOLE.print(f"Datamanager after setup usage: ", get_memory_usage())
@@ -183,7 +186,7 @@ class NesfDataManager(DataManager):  # pylint: disable=abstract-method
         """Sets up the data loaders for training"""
         assert self.train_datasets is not None
         CONSOLE.print("Setting up training dataset...")
-
+       
         self.meta_train_image_dataloader = PrefetchLoader(
             self.train_datasets,
             batch_size=self.config.train_num_images_to_sample_from,
@@ -193,7 +196,7 @@ class NesfDataManager(DataManager):  # pylint: disable=abstract-method
         )
 
         self.train_pixel_samplers = [
-            self._get_pixel_sampler(train_dataset, self.config.train_num_rays_per_batch)
+            self._get_pixel_sampler(train_dataset, self.config.num_rays_per_neural_pointcloud + self.config.num_rays_per_query)
             for train_dataset in self.train_datasets
         ]
 
@@ -239,7 +242,7 @@ class NesfDataManager(DataManager):  # pylint: disable=abstract-method
         self.iter_eval_image_dataloaders = [
             iter(eval_image_dataloader) for eval_image_dataloader in self.eval_image_dataloaders
         ]
-
+        
         self.meta_eval_image_dataloader = PrefetchLoader(
             self.eval_datasets,
             batch_size=self.config.train_num_images_to_sample_from,
@@ -248,9 +251,8 @@ class NesfDataManager(DataManager):  # pylint: disable=abstract-method
             device=self.device,
         )
 
-        print("iters created")
         self.eval_pixel_samplers = [
-            self._get_pixel_sampler(eval_dataset, self.config.eval_num_rays_per_batch)
+            self._get_pixel_sampler(eval_dataset, self.config.num_rays_per_neural_pointcloud + self.config.num_rays_per_query)
             for eval_dataset in self.eval_datasets
         ]
         self.eval_ray_generators = [
@@ -317,13 +319,13 @@ class NesfDataManager(DataManager):  # pylint: disable=abstract-method
                 thread.start()
 
     @profiler.time_function
-    def next_train(self, step: int) -> Tuple[RayBundle, Dict]:
+    def next_train(self, step: int) -> Tuple[RayBundle, Dict, RayBundle, Dict]:
         """Returns the next batch of data from the train dataloader."""
         if self.last_model is not None:
             with self.meta_train_image_dataloader.lock:
                 if self.last_model_idx not in self.meta_train_image_dataloader.queued_idx:
                     self.last_model.to("cpu", non_blocking=True)
-
+            
         self.train_count += 1
         time1 = time.time()
         # image_batch: dict = next(self.meta_train_image_dataloader)
@@ -336,10 +338,10 @@ class NesfDataManager(DataManager):  # pylint: disable=abstract-method
         self.last_model = image_batch["model"][0]
         self.last_model_idx = model_idx
         print("Processing :", model_idx)
-
+        
         # model_idx = self.step_to_dataset(step)
         # image_batch: dict = next(self.iter_train_image_dataloaders[model_idx])
-
+        
 
         time2 = time.time()
         if self.config.use_sample_mask:
@@ -394,15 +396,34 @@ class NesfDataManager(DataManager):  # pylint: disable=abstract-method
         CONSOLE.print(f"Next Train - ray generation: {time4 - time3}")
         CONSOLE.print("After next train mem usage: ", get_memory_usage())
 
-        return ray_bundle, batch
+        # split ray_bundle and batch into two
+        ray_bundle_np, batch_np, ray_bundle_query, batch_sample_query = self.split_batch(ray_bundle, batch)
 
-    def next_eval(self, step: int) -> Tuple[RayBundle, Dict]:
+        return ray_bundle_np, batch_np, ray_bundle_query, batch_sample_query
+    
+    def split_batch(self, ray_bundle: RayBundle, batch: Dict) -> Tuple[RayBundle, Dict, RayBundle, Dict]:
+        """splits the ray_bundle into a two. One should be used for the field neural point generation and the other for the querying of that point cloud."""
+        ray_bundle_np = ray_bundle[:self.config.num_rays_per_neural_pointcloud]
+        ray_bundle_query = ray_bundle[self.config.num_rays_per_neural_pointcloud:]
+        model_idx = batch["model_idx"]
+        model = batch["model"]
+        del batch["model_idx"]
+        del batch["model"]
+        batch_np = {k: v[:self.config.num_rays_per_neural_pointcloud] for k, v in batch.items()}
+        batch_query = {k: v[self.config.num_rays_per_neural_pointcloud:] for k, v in batch.items()}
+        batch_np["model_idx"] = model_idx
+        batch_np["model"] = model
+        batch_query["model_idx"] = model_idx
+        batch_query["model"] = model
+        return ray_bundle_np, batch_np, ray_bundle_query, batch_query
+
+    def next_eval(self, step: int) -> Tuple[RayBundle, Dict, RayBundle, Dict]:
         """Returns the next batch of data from the eval dataloader."""
         if self.last_eval_model is not None:
             with self.meta_eval_image_dataloader.lock:
                 if self.last_eval_model_idx not in self.meta_eval_image_dataloader.queued_idx:
                     self.last_eval_model.to("cpu", non_blocking=True)
-
+                    
         image_batch: dict = next(self.meta_eval_image_dataloader)
         assert image_batch["model"][0].device != "cpu"
         model_idx = image_batch["model_idx"]
@@ -410,14 +431,17 @@ class NesfDataManager(DataManager):  # pylint: disable=abstract-method
         self.last_eval_model = image_batch["model"][0]
         self.last_eval_model_idx = model_idx
         CONSOLE.print(f"Eval model scene {model_idx}")
-
+        
         assert self.eval_pixel_samplers[model_idx] is not None
         batch = self.eval_pixel_samplers[model_idx].sample(image_batch)
         ray_indices = batch["indices"]
         batch["model_idx"] = model_idx
         batch["model"] = image_batch["model"][0]
         ray_bundle = self.eval_ray_generators[model_idx](ray_indices)
-        return ray_bundle, batch
+
+        ray_bundle_np, batch_np, ray_bundle_query, batch_sample_query = self.split_batch(ray_bundle, batch)
+
+        return ray_bundle_np, batch_np, ray_bundle_query, batch_sample_query
 
     def next_eval_image(self, step: int) -> Tuple[int, int, RayBundle, Dict]:
         model_idx = self.eval_image_model % self.eval_datasets.set_count()
@@ -446,7 +470,7 @@ class NesfDataManager(DataManager):  # pylint: disable=abstract-method
                 model_idxs.append(model_idx)
                 ray_bundles.append(camera_ray_bundle)
                 batches.append(batch)
-
+                
         return image_idxs, model_idxs, ray_bundles, batches
 
     def get_param_groups(self) -> Dict[str, List[Parameter]]:  # pylint: disable=no-self-use
@@ -508,7 +532,7 @@ class PrefetchLoader:
         with self.lock:
             self.queue.put(batch)
             self.queued_idx.append(idx)
-
+        
     def __next__(self):
         time1 = time.time()
         if self.queue.qsize() < self.prefetch_batches and self.executor._work_queue.qsize() < self.prefetch_batches:
@@ -516,7 +540,7 @@ class PrefetchLoader:
             print("Prefetching", batches_to_prefetch, "batches queue size", self.queue.qsize())
             futures = [self.executor.submit(self.prefetch) for _ in range(batches_to_prefetch)]
             # futures = [self.prefetch() for _ in range(self.prefetch_batches - self.queue.qsize())]
-
+        
         time2 = time.time()
         batch = self.queue.get()
         with self.lock:
@@ -525,14 +549,13 @@ class PrefetchLoader:
         return batch
 
 def load_model(model_path, model_config):
-    time1 = time.time()
     pred_normals = "normal" in str(model_path)
-
+    
     model=DepthNerfactoModelConfig(eval_num_rays_per_chunk=1 << 15,
                                     predict_normals=pred_normals,
                                     **model_config)
-
-
+                                    
+    
     # scene box will be loaded from state
     # num_train_data is 271 for our models, not relevant during eval anyway
     scene_box = SceneBox(aabb = torch.zeros((2,3)))
@@ -541,18 +564,12 @@ def load_model(model_path, model_config):
     model = model.setup(scene_box=scene_box,
             num_train_data=num_train_data,
             metadata={})
-    time2 = time.time()
     loaded_state = torch.load(model_path, map_location="cpu")["pipeline"]
-
+    
     state = {key.replace("module.", ""): value for key, value in loaded_state.items()}
     state = {key.replace("_model.", ""): value for key, value in state.items()}
     missing_keys, unexpected_keys = model.load_state_dict(state, strict=True)
     assert missing_keys == []
     assert unexpected_keys == []
-
-    time3 = time.time()
-    print("Load Model - loading model took", time2 - time1)
-    print("Load Model - loading state dict took", time3 - time2)
-
-
+    
     return model

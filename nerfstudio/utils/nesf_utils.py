@@ -140,7 +140,7 @@ def spatial_sliced_batching(ray_samples: RaySamples, field_outputs: dict, batch_
     rand_points = torch.rand((padding, 3), device=points.device) * (points_max - points_min) + points_min
     # scale points to be closer to the scene bounds center by factor of 0.6
     # rand_points = (rand_points - scene_bound.mean(0)) * 0.6 + scene_bound.mean(0)
-
+    
     points_padded = torch.cat((points, rand_points))
 
     directions = ray_samples.frustums.directions
@@ -159,59 +159,6 @@ def spatial_sliced_batching(ray_samples: RaySamples, field_outputs: dict, batch_
 
     return field_outputs, masking, ids_shuffle, ids_restore, points_padded, directions_padded
 
-def visualize_rgb_point_cloud(points: torch.Tensor, colors: torch.Tensor):
-    points = points.reshape(-1, 3).to("cpu").numpy()
-    colors = colors.reshape(-1, 3).to("cpu").numpy()
-
-    scatter = go.Scatter3d(
-        x=points[:, 0],
-        y=points[:, 1],
-        z=points[:, 2],
-        mode="markers",
-        marker=dict(color=colors, size=3, opacity=0.8),
-    )
-    data = [scatter]
-    # create a layout with axes labels
-    layout = go.Layout(
-        scene=dict(
-            xaxis=dict(showgrid=False, zeroline=False, showline=False, ticks='', showticklabels=False, title=''),
-            yaxis=dict(showgrid=False, zeroline=False, showline=False, ticks='', showticklabels=False, title=''),
-            zaxis=dict(showgrid=False, zeroline=False, showline=False, ticks='', showticklabels=False, title=''),
-            aspectmode="data"),
-    )
-    fig = go.Figure(data=data, layout=layout)
-    fig.update_layout(template='simple_white')
-    fig.show()
-
-
-def visualize_rgb_point_cloud_masked(points: torch.Tensor, colors: torch.Tensor, points_masked):
-    points = points.reshape(-1, 3).to("cpu").numpy()
-    colors = colors.reshape(-1, 3).to("cpu").numpy()
-    points_masked = points_masked.reshape(-1, 3).to("cpu").numpy()
-    colors_masked = np.zeros_like(colors)
-
-    points = np.concatenate((points, points_masked), axis=0)
-    colors = np.concatenate((colors, colors_masked), axis=0)
-
-    scatter = go.Scatter3d(
-        x=points[:, 0],
-        y=points[:, 1],
-        z=points[:, 2],
-        mode="markers",
-        marker=dict(color=colors, size=3, opacity=0.8),
-    )
-    data = [scatter]
-    # create a layout with axes labels
-    layout = go.Layout(
-        scene=dict(
-            xaxis=dict(showgrid=False, zeroline=False, showline=False, ticks='', showticklabels=False, title=''),
-            yaxis=dict(showgrid=False, zeroline=False, showline=False, ticks='', showticklabels=False, title=''),
-            zaxis=dict(showgrid=False, zeroline=False, showline=False, ticks='', showticklabels=False, title=''),
-            aspectmode="data"),
-    )
-    fig = go.Figure(data=data, layout=layout)
-    fig.update_layout(template='simple_white')
-    fig.show()
 
 def visualize_point_batch(points_pad: torch.Tensor, ids_shuffle: Union[None, torch.Tensor] = None, normals: torch.Tensor = None, classes: torch.Tensor = None):
     CONSOLE.print("Visualizing point batch")
@@ -227,25 +174,25 @@ def visualize_point_batch(points_pad: torch.Tensor, ids_shuffle: Union[None, tor
         points_pad = points_pad.to("cpu")
         if normals is not None:
             normals = normals.to("cpu")
-
+            
     # points pad reordered should be [B, batch_size, 3]
     if len(points_pad.shape) == 2:
         points_pad = points_pad.unsqueeze(0)
-
+    
     if normals is not None and len(normals.shape) == 3:
         normals = normals.reshape(-1 ,3)
 
     if normals is not None:
         # normalize normals to length 0.01
         normals = (normals / torch.norm(normals, dim=-1, keepdim=True)) * 0.01
-
+        
     points = torch.empty((0, 3))
     colors = torch.empty((0, 3))
     if classes is not None:
         classes = classes.to("cpu")
     for i in range(points_pad.shape[0]):
         points = torch.cat((points, points_pad[i, :, :]))
-
+        
         if classes is not None:
             labels = classes[i, :]
             new_colors = torch.index_select(CLASS_TO_COLOR, 0, labels) * 255
@@ -253,13 +200,13 @@ def visualize_point_batch(points_pad: torch.Tensor, ids_shuffle: Union[None, tor
             new_colors = torch.randn((1, 3)).repeat(batch_size, 1) * 255
             # new_colors = torch.zeros((1,3)).repeat(batch_size, 1)
         colors = torch.cat((colors, new_colors))
-
+        
     scatter = go.Scatter3d(
         x=points[:, 0],
         y=points[:, 1],
         z=points[:, 2],
         mode="markers",
-        marker=dict(color=colors, size=3, opacity=0.8),
+        marker=dict(color=colors, size=1, opacity=0.8),
     )
     data = [scatter]
     # create a layout with axes labels
@@ -267,14 +214,6 @@ def visualize_point_batch(points_pad: torch.Tensor, ids_shuffle: Union[None, tor
         title=f"RGB points: {points_pad.shape}",
         scene=dict(xaxis=dict(title="X"), yaxis=dict(title="Y"), zaxis=dict(title="Z"), aspectmode="data"),
     )
-    # layout = go.Layout(
-    #     title=f"RGB points: {points_pad.shape}",
-    #     scene=dict(
-    #         xaxis=dict(showgrid=False, zeroline=False, showline=False, ticks='', showticklabels=False, title=''),
-    #         yaxis=dict(showgrid=False, zeroline=False, showline=False, ticks='', showticklabels=False, title=''),
-    #         zaxis=dict(showgrid=False, zeroline=False, showline=False, ticks='', showticklabels=False, title=''),
-    #         aspectmode="data"),
-    #     )
     if normals is not None:
         # calculate end points for each line
         endpoints = points + normals
@@ -286,8 +225,6 @@ def visualize_point_batch(points_pad: torch.Tensor, ids_shuffle: Union[None, tor
         normals = go.Scatter3d(x=x, y=y, z=z, mode='lines')
         data.append(normals)
     fig = go.Figure(data=data, layout=layout)
-    fig.update_layout(template='simple_white')
-
     # if normals is not None:
     #     fig.add_trace(
     #         go.Cone(
@@ -329,7 +266,7 @@ def visualize_points(points: torch.Tensor):
 
 def log_points_to_wandb(points_pad: torch.Tensor, ids_shuffle: Union[None, torch.Tensor] = None):
     batch_size = points_pad.shape[1]
-
+    
     if wandb.run is None:
         CONSOLE.print("[yellow] Wandb run is None but tried to log points. Skipping!")
         return
@@ -353,17 +290,17 @@ def compute_mIoU(confusion_matrix) -> Tuple[float, np.ndarray]:
     ground_truth_set = confusion_matrix.sum(axis=0)
     predicted_set = confusion_matrix.sum(axis=1)
     union = ground_truth_set + predicted_set - intersection
-
-
+    
+    
     IoU = intersection / union.astype(np.float32)
 
     mIoU = np.nanmean(IoU)
-
+    
     return mIoU, IoU
 
 def calculate_accuracy(confusion_matrix):
     """columns is prediction rows is true, confusion matrix needs to be unnormalized"""
-
+    
     # Get the diagonal elements of the confusion matrix
     correct_predictions = np.diag(confusion_matrix)
     # Get the total number of predictions

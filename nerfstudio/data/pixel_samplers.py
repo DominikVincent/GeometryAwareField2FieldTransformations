@@ -115,7 +115,7 @@ class PixelSampler:  # pylint: disable=too-few-public-methods
         if keep_full_image:
             collated_batch["full_image"] = batch["image"]
         time5 = time.time()
-
+        
         # print(f"Collate image dataset batch - sampling: {time2 - time1}")
         # print(f"Collate image dataset batch - splitting: {time3 - time2}")
         # print(f"Collate image dataset batch - collating: {time4 - time3}")

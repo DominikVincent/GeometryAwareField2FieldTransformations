@@ -93,10 +93,10 @@ class CacheDataloader(DataLoader):
                 f"Caching {self.num_images_to_sample_from} out of {len(self.dataset)} images, "
                 f"resampling every {self.num_times_to_repeat_images} iters."
             )
-
+            
         CONSOLE.print("Memory usage", get_memory_usage())
         return
-
+    
     def __getitem__(self, idx):
         return self.dataset.__getitem__(idx)
 
@@ -133,29 +133,29 @@ class CacheDataloader(DataLoader):
         #     thread = threading.Thread(target=self._get_and_store_next_batch)
         #     thread.start()
         #     return batch
-
+        
         # thread = threading.Thread(target=self._get_and_store_next_batch)
         # thread.start()
         # self._get_and_store_next_batch()
         # next_batch_process = multiprocessing.Process(target=self._get_and_store_next_batch)
         # next_batch_process.start()
-
+        
         batch_list = self._get_batch_list()
         collated_batch = self.collate_fn(batch_list)
         # collated_batch = self.get_random_data()
-
+        
         # collated_batch = None
         collated_batch = get_dict_to_torch(collated_batch, device=self.device, exclude=["image", "semantics"])
         # objgraph.show_refs([batch_list], filename="batch_list.png")
         # objgraph.show_backrefs([batch_list], filename='batch_list-backref-graph.png')
         # self.next_collated_batch = collated_batch
         return collated_batch
-
+    
     def _get_and_store_next_batch(self):
         next_batch_list = self._get_batch_list()
         self.next_collated_batch = self.collate_fn(next_batch_list)
         print("Stored next batch!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-        return
+        return 
 
     def __next__(self):
         return None

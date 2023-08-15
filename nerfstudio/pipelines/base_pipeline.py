@@ -360,7 +360,7 @@ class VanillaPipeline(Pipeline):
         """
         state = {key.replace("module.", ""): value for key, value in loaded_state.items()}
         missing_keys, unexpected_keys = self.load_state_dict(state, strict=False)
-
+        
         print("Loaded Pipeline")
         print("Missing Keys: ", missing_keys)
         print("Unexpected Keys: ", unexpected_keys)
