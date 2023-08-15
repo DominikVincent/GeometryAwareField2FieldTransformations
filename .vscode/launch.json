@@ -105,7 +105,7 @@
       "name": "Try NeSF",
       "type": "python",
       "request": "launch",
-      "program": "/data/vision/polina/projects/wmh/dhollidt/documents/nerf/nerfstudio_fork/tests/try_nesf.py",
+      "program": "/YOUR/PATH/HERE/nerfstudio_fork/tests/try_nesf.py",
       // "args": "viewer",
       // "args": "wandb",
       "args": "tensorboard",
@@ -121,7 +121,7 @@
     "name": "sweep NeSF",
     "type": "python",
     "request": "launch",
-    "program": "/data/vision/polina/projects/wmh/dhollidt/documents/nerf/nerfstudio_fork/scripts/sweep_nesf.py",
+    "program": "/YOUR/PATH/HERE/nerfstudio_fork/scripts/sweep_nesf.py",
     "console": "integratedTerminal",
     "args": "dhollidt/mae-models-project/kfsdevg7",
     "env": {
@@ -133,7 +133,7 @@
       "name": "nerfacto",
       "type": "python",
       "request": "launch",
-      "program": "/data/vision/polina/projects/wmh/dhollidt/documents/nerf/nerfstudio_fork/scripts/train.py",
+      "program": "/YOUR/PATH/HERE/nerfstudio_fork/scripts/train.py",
       "args": ["nerfacto", "--data", "/data/vision/polina/projects/wmh/dhollidt/datasets/toybox-5/0/", "--vis", "tensorboard"],
       "console": "integratedTerminal",
       "justMyCode": false
@@ -142,12 +142,12 @@
       "name": "ns-eval",
       "type": "python",
       "request": "launch",
-      "program": "/data/vision/polina/projects/wmh/dhollidt/documents/nerf/nerfstudio_fork/scripts/eval.py",
+      "program": "/YOUR/PATH/HERE/nerfstudio_fork/scripts/eval.py",
       "args": [
         "--load-config",
-        "/data/vision/polina/projects/wmh/dhollidt/documents/nerf/nesf_models/tmp/nesf/2023-08-03_230622_457035/auto_eval_config.yml",
+        "/YOUR/PATH/HERE/nesf_models/tmp/nesf/2023-08-03_230622_457035/auto_eval_config.yml",
         "--output-path",
-        "/data/vision/polina/projects/wmh/dhollidt/documents/nerf/nesf_models/tmp/nesf/2023-06-29_150157/auto_eval.json",
+        "/YOUR/PATH/HERE/nesf_models/tmp/nesf/2023-06-29_150157/auto_eval.json",
         "--use-wandb",
         "--name",
         "test_3dmiou",
@@ -162,11 +162,11 @@
     "name": "ns-train from config",
     "type": "python",
     "request": "launch",
-    "program": "/data/vision/polina/projects/wmh/dhollidt/documents/nerf/nerfstudio_fork/scripts/train.py",
+    "program": "/YOUR/PATH/HERE/nerfstudio_fork/scripts/train.py",
     "args": ["nesf",
     "--load_config",
-    "/data/vision/polina/projects/wmh/dhollidt/documents/nerf/nesf_models/tmp/nesf/2023-07-19_170023_940539/auto_eval_config.yml"
-    // "/data/vision/polina/projects/wmh/dhollidt/documents/nerf/toybox-5-depth-normal-models/98/depth-nerfacto/07_04_23/auto_semantic_config.yml"
+    "/YOUR/PATH/HERE/nesf_models/tmp/nesf/2023-07-19_170023_940539/auto_eval_config.yml"
+    // "/YOUR/PATH/HERE/toybox-5-depth-normal-models/98/depth-nerfacto/07_04_23/auto_semantic_config.yml"
     ],
     "console": "integratedTerminal",
     "justMyCode": false
@@ -175,7 +175,7 @@
     "name": "eval runs",
     "type": "python",
     "request": "launch",
-    "program": "/data/vision/polina/projects/wmh/dhollidt/documents/nerf/nerfstudio_fork/train_scripts/eval_sweep.py",
+    "program": "/YOUR/PATH/HERE/nerfstudio_fork/train_scripts/eval_sweep.py",
     "args": ["run","surface-multi-cam-eval"],
     "console": "integratedTerminal",
     "justMyCode": false,
@@ -187,13 +187,13 @@
     "name": "ns-train nesf",
     "type": "python",
     "request": "launch",
-    "program": "/data/vision/polina/projects/wmh/dhollidt/documents/nerf/nerfstudio_fork/scripts/train.py",
+    "program": "/YOUR/PATH/HERE/nerfstudio_fork/scripts/train.py",
     "args": [
       "nesf",
 "--data",
 "/data/vision/polina/projects/wmh/dhollidt/datasets/klevr_nesf/0",
 "--output-dir",
-"/data/vision/polina/projects/wmh/dhollidt/documents/nerf/nesf_models/",
+"/YOUR/PATH/HERE/nesf_models/",
 "--vis",
 "wandb",
 "--steps-per-eval-batch",
@@ -262,7 +262,7 @@
 "0.001",
 "nesf-data",
 "--data-config",
-"/data/vision/polina/projects/wmh/dhollidt/documents/nerf/data/klever_depth_nesf_train_10.json"
+"/YOUR/PATH/HERE/data/klever_depth_nesf_train_10.json"
   ],
     "console": "integratedTerminal",
     "justMyCode": false,
@@ -274,7 +274,7 @@
     "name": "ns-train nerfacto depth",
     "type": "python",
     "request": "launch",
-    "program": "/data/vision/polina/projects/wmh/dhollidt/documents/nerf/nerfstudio_fork/scripts/train.py",
+    "program": "/YOUR/PATH/HERE/nerfstudio_fork/scripts/train.py",
     "args": [
       "depth-nerfacto",
       "--vis", "wandb",
@@ -284,7 +284,7 @@
       "--max-num-iterations", "16000",
       "--data", "/data/vision/polina/projects/wmh/dhollidt/kubric_datasets/klevr/0",
       "--experiment-name", "0",
-      "--output-dir", "/data/vision/polina/projects/wmh/dhollidt/documents/nerf/nesf_models/",
+      "--output-dir", "/YOUR/PATH/HERE/nesf_models/",
       "--pipeline.model.pred-normal-loss-mult", "0.1",
       "--pipeline.model.is-euclidean-depth", "True",
       "--pipeline.model.max-res", "1536",
@@ -308,10 +308,10 @@
     "name": "ns-train from config",
     "type": "python",
     "request": "launch",
-    "program": "/data/vision/polina/projects/wmh/dhollidt/documents/nerf/nerfstudio_fork/scripts/train.py",
+    "program": "/YOUR/PATH/HERE/nerfstudio_fork/scripts/train.py",
     "args": [
       "nesf",
-       "--load_config", "/data/vision/polina/projects/wmh/dhollidt/documents/nerf/nesf_models/tmp/nesf/2023-04-29_175231/auto_semantic_config_small_3_no_pretrain.yml",
+       "--load_config", "/YOUR/PATH/HERE/nesf_models/tmp/nesf/2023-04-29_175231/auto_semantic_config_small_3_no_pretrain.yml",
   ],
     "console": "integratedTerminal",
     "justMyCode": false,

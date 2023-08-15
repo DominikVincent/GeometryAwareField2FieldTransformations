@@ -7,8 +7,8 @@ set -x  # Enable debug mode to print each command
 directory_path="/data/vision/polina/projects/wmh/dhollidt/datasets/toybox-5"
 
 # Set ouput directory
-# output_dir="/data/vision/polina/projects/wmh/dhollidt/documents/nerf/klever_depth_normal_models_nesf"
-output_dir="/data/vision/polina/projects/wmh/dhollidt/documents/nerf/toybox-5-depth-normal-models-nesf-2"
+# output_dir="/YOUR/PATH/HERE/klever_depth_normal_models_nesf"
+output_dir="/YOUR/PATH/HERE/toybox-5-depth-normal-models-nesf-2"
 
 # check or create output directory
 if [ ! -d "$output_dir" ]; then
@@ -16,7 +16,7 @@ if [ ! -d "$output_dir" ]; then
 fi
 
 # Set the path to the bash script you want to execute
-script_path="/data/vision/polina/projects/wmh/dhollidt/documents/nerf/nerfstudio_fork/train_scripts/train.bash"
+script_path="/YOUR/PATH/HERE/nerfstudio_fork/train_scripts/train.bash"
 
 # folders_to_process=("39" "88" "113" "114" "116" "115" "131" "133" "134" "147" "155" "158" "161" "164" "160" "199" "203" "211" "217" "229" "230" "243" "246" "265" "266" "278")
 folders_to_process=("281" "286" "284" "292" "293" "296" "299" "330" "385" "388" "394" "415" "418" "437" "432" "433" "441" "453" "461" "462" "470" "479" "483" "497" "502" "510" "514" "524")

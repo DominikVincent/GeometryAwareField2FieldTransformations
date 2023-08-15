@@ -304,8 +304,8 @@ class WandbWriter(Writer):
         print("Run name:", wandb.run.name)
         print("Project name:", wandb.run.project)
         print("Run tags:", wandb.run.tags)
-        wandb.save("/data/vision/polina/projects/wmh/dhollidt/documents/nerf/nerfstudio_fork/nerfstudio/models/nesf.py")
-        wandb.save("/data/vision/polina/projects/wmh/dhollidt/documents/nerf/nerfstudio_fork/nerfstudio/")
+        wandb.save("/YOUR/PATH/HERE/nerfstudio_fork/nerfstudio/models/nesf.py")
+        wandb.save("/YOUR/PATH/HERE/nerfstudio_fork/nerfstudio/")
 
     def write_image(self, name: str, image: TensorType["H", "W", "C"], step: int) -> None:
         image = torch.permute(image, (2, 0, 1))

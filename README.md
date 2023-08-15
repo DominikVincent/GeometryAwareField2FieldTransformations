@@ -67,5 +67,3 @@ To evaluate a run first create the eval data config via playground/create_nesf_d
 It should directly create a new run on W&B containing the results. 
 
 Otherwise, you could manually use the ns-eval command line tool to evaluate runs. It might be needed to either specify the model configuration manually or adapt the model config which is supposed to be loaded.
-
-

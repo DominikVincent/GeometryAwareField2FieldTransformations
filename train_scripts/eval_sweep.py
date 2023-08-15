@@ -26,7 +26,7 @@ parser.add_argument(
     "--eval_config",
     help="The nesf eval dataset file",
     type=str,
-    default="/data/vision/polina/projects/wmh/dhollidt/documents/nerf/data/klever_depth_normal_nesf_test_20.json",
+    default="/YOUR/PATH/HERE/data/klever_depth_normal_nesf_test_20.json",
 )
 parser.add_argument("--proj_name", help="The wandb proj name", type=str, default="dhollidt/toybox-5-nesf")
 

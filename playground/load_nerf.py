@@ -16,16 +16,16 @@ from utils import *
 
 
 # Dice DATA
-MODEL_CHECKPOINT_PATH = Path("/data/vision/polina/projects/wmh/dhollidt/documents/nerf/outputs/dice_256/nerfacto/2023-01-16_101826/nerfstudio_models")
+MODEL_CHECKPOINT_PATH = Path("/YOUR/PATH/HERE/outputs/dice_256/nerfacto/2023-01-16_101826/nerfstudio_models")
 MODEL_LOAD_STEP = 24000
-DATA_PATH = Path("/data/vision/polina/projects/wmh/dhollidt/documents/nerf/data/dice_rand_v3")
+DATA_PATH = Path("/YOUR/PATH/HERE/data/dice_rand_v3")
 
 # CLEVR DATA
 # MODEL_CHECKPOINT_PATH = Path("/data/vision/polina/scratch/clintonw/datasets/nerfacto/0/nerfacto/2023-01-13_145424/nerfstudio_models")
 # MODEL_LOAD_STEP = 29999
 # DATA_PATH = Path("/data/vision/polina/scratch/clintonw/datasets/kubric/0/")
 
-OUTPUT_DIR = Path("/data/vision/polina/projects/wmh/dhollidt/documents/nerf/playground")
+OUTPUT_DIR = Path("/YOUR/PATH/HERE/playground")
 
 
 trainConfig = TrainerConfig(

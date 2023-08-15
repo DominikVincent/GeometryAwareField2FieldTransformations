@@ -84,9 +84,9 @@ def test_simple_io():
     train_loop(local_rank=0, world_size=0, config=config)
 
 def test_nesf():
-    data_config_path = Path("/data/vision/polina/projects/wmh/dhollidt/documents/nerf/playground/nesf_test_config.json")
+    data_config_path = Path("/YOUR/PATH/HERE/playground/nesf_test_config.json")
 
-    OUTPUT_DIR = Path("/data/vision/polina/projects/wmh/dhollidt/documents/nerf/playground/own_loading/")
+    OUTPUT_DIR = Path("/YOUR/PATH/HERE/playground/own_loading/")
     DATA_PATH = Path("/data/vision/polina/scratch/clintonw/datasets/kubric/klevr/0")
 
     trainConfig = method_configs["nesf"]

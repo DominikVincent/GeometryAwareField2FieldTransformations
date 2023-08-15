@@ -3,15 +3,15 @@
 source /data/vision/polina/projects/wmh/dhollidt/conda/bin/activate
 conda activate nerfstudio2
 
-# DATA_CONFIG="/data/vision/polina/projects/wmh/dhollidt/documents/nerf/data/klever_nesf_train_100.json"
-# DATA_CONFIG="/data/vision/polina/projects/wmh/dhollidt/documents/nerf/data/nesf_test_config_5.json"
-# DATA_CONFIG="/data/vision/polina/projects/wmh/dhollidt/documents/nerf/data/klever_depth_nesf_train_100.json"
-# DATA_CONFIG="/data/vision/polina/projects/wmh/dhollidt/documents/nerf/data/toybox-5_nesf_train_100_270.0.json"
-DATA_CONFIG="/data/vision/polina/projects/wmh/dhollidt/documents/nerf/data/toybox-5_nesf_train_10_270.json"
+# DATA_CONFIG="/YOUR/PATH/HERE/data/klever_nesf_train_100.json"
+# DATA_CONFIG="/YOUR/PATH/HERE/data/nesf_test_config_5.json"
+# DATA_CONFIG="/YOUR/PATH/HERE/data/klever_depth_nesf_train_100.json"
+# DATA_CONFIG="/YOUR/PATH/HERE/data/toybox-5_nesf_train_100_270.0.json"
+DATA_CONFIG="/YOUR/PATH/HERE/data/toybox-5_nesf_train_10_270.json"
 
 
 ns-train nesf --data /data/vision/polina/projects/wmh/dhollidt/datasets/klevr_nesf/0  \
-	--output-dir /data/vision/polina/projects/wmh/dhollidt/documents/nerf/nesf_models/ \
+	--output-dir /YOUR/PATH/HERE/nesf_models/ \
 	--vis tensorboard \
 	--machine.num-gpus 1 \
 	--steps-per-eval-batch 100 \

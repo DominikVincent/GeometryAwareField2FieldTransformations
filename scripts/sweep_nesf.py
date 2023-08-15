@@ -44,9 +44,9 @@ def main():
     config = wandb.config
     print("############## INIT WANDB AND GOT CONFIG #################")
 
-    data_config_path = Path("/data/vision/polina/projects/wmh/dhollidt/documents/nerf/data/nesf_test_config_5.json")
+    data_config_path = Path("/YOUR/PATH/HERE/data/nesf_test_config_5.json")
 
-    OUTPUT_DIR = Path("/data/vision/polina/projects/wmh/dhollidt/documents/nerf/nesf_models/")
+    OUTPUT_DIR = Path("/YOUR/PATH/HERE/nesf_models/")
     DATA_PATH = Path("/data/vision/polina/projects/wmh/dhollidt/datasets/klevr/11")
 
     trainConfig = copy.deepcopy(method_configs["nesf"])

@@ -170,7 +170,7 @@ dpi = 600
 fig = go.Figure(data=data, layout=layout)
 fig.update_layout(width=int(width*dpi), height=int(height*dpi))
 
-folder_path = "/data/vision/polina/projects/wmh/dhollidt/documents/nerf/results"
+folder_path = "/YOUR/PATH/HERE/results"
 if not os.path.exists(folder_path):
     os.makedirs(folder_path)
 file_name = "{}.png".format(title)

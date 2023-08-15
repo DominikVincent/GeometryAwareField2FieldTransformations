@@ -55,9 +55,9 @@ def _load_checkpoint(load_dir, load_step, data_dir: Path, local_rank: int = 0, w
 
 
 # Dice DATA
-MODEL_CHECKPOINT_PATH = Path("/data/vision/polina/projects/wmh/dhollidt/documents/nerf/outputs/dice_256/nerfacto/2023-01-16_101826/nerfstudio_models")
+MODEL_CHECKPOINT_PATH = Path("/YOUR/PATH/HERE/outputs/dice_256/nerfacto/2023-01-16_101826/nerfstudio_models")
 MODEL_LOAD_STEP = 24000
-DATA_PATH = Path("/data/vision/polina/projects/wmh/dhollidt/documents/nerf/data/dice_rand_v3")
+DATA_PATH = Path("/YOUR/PATH/HERE/data/dice_rand_v3")
 
 pipeline = _load_checkpoint(MODEL_CHECKPOINT_PATH, MODEL_LOAD_STEP, DATA_PATH)
 model = pipeline.model

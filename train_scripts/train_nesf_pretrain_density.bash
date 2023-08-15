@@ -3,9 +3,9 @@
 source /data/vision/polina/projects/wmh/dhollidt/conda/bin/activate
 conda activate nerfstudio2
 
-# DATA_CONFIG="/data/vision/polina/projects/wmh/dhollidt/documents/nerf/data/klever_depth_nesf_train_1.json"
-# DATA_CONFIG="/data/vision/polina/projects/wmh/dhollidt/documents/nerf/data/klever_depth_nesf_train_10.json"
-DATA_CONFIG="/data/vision/polina/projects/wmh/dhollidt/documents/nerf/data/klever_depth_nesf_train_100.json"
+# DATA_CONFIG="/YOUR/PATH/HERE/data/klever_depth_nesf_train_1.json"
+# DATA_CONFIG="/YOUR/PATH/HERE/data/klever_depth_nesf_train_10.json"
+DATA_CONFIG="/YOUR/PATH/HERE/data/klever_depth_nesf_train_100.json"
 
 # RAYS=131072
 # RAYS=65536
@@ -15,7 +15,7 @@ DATA_CONFIG="/data/vision/polina/projects/wmh/dhollidt/documents/nerf/data/kleve
 RAYS=4096
 
 ns-train nesf --data /data/vision/polina/projects/wmh/dhollidt/datasets/klevr_nesf/0  \
-	--output-dir /data/vision/polina/projects/wmh/dhollidt/documents/nerf/nesf_models/ \
+	--output-dir /YOUR/PATH/HERE/nesf_models/ \
 	--vis wandb \
 	--steps-per-eval-batch 100 \
     --steps-per-eval-image 500 \

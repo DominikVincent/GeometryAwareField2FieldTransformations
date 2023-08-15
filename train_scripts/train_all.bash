@@ -8,8 +8,8 @@ set -x  # Enable debug mode to print each command
 directory_path="/data/vision/polina/projects/wmh/dhollidt/kubric_datasets/klevr"
 
 # Set ouput directory
-# output_dir="/data/vision/polina/projects/wmh/dhollidt/documents/nerf/klever_depth_normal_models_nesf"
-output_dir="/data/vision/polina/projects/wmh/dhollidt/documents/nerf/klevr-normal"
+# output_dir="/YOUR/PATH/HERE/klever_depth_normal_models_nesf"
+output_dir="/YOUR/PATH/HERE/klevr-normal"
 
 # check or create output directory
 if [ ! -d "$output_dir" ]; then
@@ -17,7 +17,7 @@ if [ ! -d "$output_dir" ]; then
 fi
 
 # Set the path to the bash script you want to execute
-script_path="/data/vision/polina/projects/wmh/dhollidt/documents/nerf/nerfstudio_fork/train_scripts/train.bash"
+script_path="/YOUR/PATH/HERE/nerfstudio_fork/train_scripts/train.bash"
 
 # Set the number of folders to process
 num_folders=1

@@ -4,7 +4,7 @@ source /data/vision/polina/projects/wmh/dhollidt/conda/bin/activate
 conda activate nerfstudio2
 
 ns-train nesf_density --data /data/vision/polina/projects/wmh/dhollidt/datasets/klevr/11 \
-	--output-dir /data/vision/polina/projects/wmh/dhollidt/documents/nerf/nesf_models/ \
+	--output-dir /YOUR/PATH/HERE/nesf_models/ \
 	--vis wandb \
 	--pipeline.datamanager.steps-per-model 1 \
 	--pipeline.model.mode density \
@@ -28,4 +28,4 @@ ns-train nesf_density --data /data/vision/polina/projects/wmh/dhollidt/datasets/
 	--pipeline.model.decoder_feature_transformer_dropout_rate 0.1 \
 	--pipeline.model.decoder_feature_transformer_feature_dim 32 \
 	nesf-data \
-	--data-config /data/vision/polina/projects/wmh/dhollidt/documents/nerf/data/nesf_test_config_5.json
+	--data-config /YOUR/PATH/HERE/data/nesf_test_config_5.json

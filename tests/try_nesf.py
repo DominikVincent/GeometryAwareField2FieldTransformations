@@ -12,55 +12,55 @@ from scripts.train import main as train_main
 
 
 def run_nesf(vis: str = "wandb"):
-    # data_config_path = Path("/data/vision/polina/projects/wmh/dhollidt/documents/nerf/data/nesf_test_config.json")
-    # data_config_path = Path("/data/vision/polina/projects/wmh/dhollidt/documents/nerf/data/nesf_test_config_5.json")
-    # data_config_path = Path("/data/vision/polina/projects/wmh/dhollidt/documents/nerf/data/klever_nesf_train_100.json")
-    # data_config_path = Path("/data/vision/polina/projects/wmh/dhollidt/documents/nerf/data/klever_nesf_train_10.json")
+    # data_config_path = Path("/YOUR/PATH/HERE/data/nesf_test_config.json")
+    # data_config_path = Path("/YOUR/PATH/HERE/data/nesf_test_config_5.json")
+    # data_config_path = Path("/YOUR/PATH/HERE/data/klever_nesf_train_100.json")
+    # data_config_path = Path("/YOUR/PATH/HERE/data/klever_nesf_train_10.json")
     # data_config_path = Path(
-    #     "/data/vision/polina/projects/wmh/dhollidt/documents/nerf/data/klever_depth_nesf_train_1.json"
+    #     "/YOUR/PATH/HERE/data/klever_depth_nesf_train_1.json"
     # )
     # data_config_path = Path(
-    #     "/data/vision/polina/projects/wmh/dhollidt/documents/nerf/data/klever_depth_nesf_train_1_normals.json"
+    #     "/YOUR/PATH/HERE/data/klever_depth_nesf_train_1_normals.json"
     # )
     # data_config_path = Path(
-    #     "/data/vision/polina/projects/wmh/dhollidt/documents/nerf/data/klever_depth_nesf_train_10.json"
+    #     "/YOUR/PATH/HERE/data/klever_depth_nesf_train_10.json"
     # )
     # data_config_path = Path(
-    #     "/data/vision/polina/projects/wmh/dhollidt/documents/nerf/data/klevr-normal_train_10_230.json"
+    #     "/YOUR/PATH/HERE/data/klevr-normal_train_10_230.json"
     # )
     # data_config_path = Path(
-    #     "/data/vision/polina/projects/wmh/dhollidt/documents/nerf/data/klever_depth_nesf_train_100.json"
+    #     "/YOUR/PATH/HERE/data/klever_depth_nesf_train_100.json"
     # )
 
     # data_config_path = Path(
-    #     "/data/vision/polina/projects/wmh/dhollidt/documents/nerf/data/klever_depth_normal_nesf_train_10.json"
+    #     "/YOUR/PATH/HERE/data/klever_depth_normal_nesf_train_10.json"
     # )
     # data_config_path = Path(
-    #     "/data/vision/polina/projects/wmh/dhollidt/documents/nerf/data/toybox-5_nesf_train_10_10.json"
+    #     "/YOUR/PATH/HERE/data/toybox-5_nesf_train_10_10.json"
     # )
     # data_config_path = Path(
-    #     "/data/vision/polina/projects/wmh/dhollidt/documents/nerf/data/toybox-5_nesf_train_10_270.json"
+    #     "/YOUR/PATH/HERE/data/toybox-5_nesf_train_10_270.json"
     # )
     # data_config_path = Path(
-    #     "/data/vision/polina/projects/wmh/dhollidt/documents/nerf/data/toybox-5_nesf_train_1_270.json"
+    #     "/YOUR/PATH/HERE/data/toybox-5_nesf_train_1_270.json"
     # )
     # data_config_path = Path(
-    #     "/data/vision/polina/projects/wmh/dhollidt/documents/nerf/data/toybox-5_nesf_train_100_270.json"
+    #     "/YOUR/PATH/HERE/data/toybox-5_nesf_train_100_270.json"
     # )
     # data_config_path = Path(
-    #     "/data/vision/polina/projects/wmh/dhollidt/documents/nerf/data/toybox-5_nesf_train_200_270.json"
+    #     "/YOUR/PATH/HERE/data/toybox-5_nesf_train_200_270.json"
     # # )
     # data_config_path = Path(
-    #     "/data/vision/polina/projects/wmh/dhollidt/documents/nerf/data/toybox-5_nesf_2_train_529_270.json"
+    #     "/YOUR/PATH/HERE/data/toybox-5_nesf_2_train_529_270.json"
     # )
     data_config_path = Path(
-        "/data/vision/polina/projects/wmh/dhollidt/documents/nerf/data/toybox-5_nesf_2_train_500_270.json"
+        "/YOUR/PATH/HERE/data/toybox-5_nesf_2_train_500_270.json"
     )
     # data_config_path = Path(
-    #     "/data/vision/polina/projects/wmh/dhollidt/documents/nerf/data/toybox-5_nesf_2_train_10_270.json"
+    #     "/YOUR/PATH/HERE/data/toybox-5_nesf_2_train_10_270.json"
     # )
 
-    OUTPUT_DIR = Path("/data/vision/polina/projects/wmh/dhollidt/documents/nerf/nesf_models/")
+    OUTPUT_DIR = Path("/YOUR/PATH/HERE/nesf_models/")
     DATA_PATH = Path("/data/vision/polina/projects/wmh/dhollidt/datasets/klevr/11")
 
     trainConfig = method_configs["nesf"]
@@ -76,7 +76,7 @@ def run_nesf(vis: str = "wandb"):
     trainConfig.steps_per_eval_image = 3000
     trainConfig.steps_per_eval_all_images = 100000000
     trainConfig.max_num_iterations = 10000000
-    # trainConfig.load_config = Path("/data/vision/polina/projects/wmh/dhollidt/documents/nerf/nesf_models/tmp/nesf/2023-07-21_103257_286997/auto_eval_config.yml")
+    # trainConfig.load_config = Path("/YOUR/PATH/HERE/nesf_models/tmp/nesf/2023-07-21_103257_286997/auto_eval_config.yml")
 
     trainConfig.pipeline.datamanager.use_sample_mask = False
     trainConfig.pipeline.datamanager.sample_mask_ground_percentage = 1
